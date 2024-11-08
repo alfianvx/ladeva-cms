@@ -12,150 +12,186 @@ import {
   Monitor,
   Smartphone,
   MonitorSmartphone,
+  CircleHelp,
+  CircleCheck,
+  CircleX,
+  Circle,
+  Clock,
+  Users,
+  CreditCard,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { NavItemLink } from "./nav-item-link";
 
 // This is sample data.
 const data = {
   teams: [
     {
-      name: "Acme Inc",
+      name: "Ladeva CMS",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
     },
     {
-      name: "Acme Corp.",
+      name: "Ladeva SaaS",
       logo: AudioWaveform,
-      plan: "Startup",
     },
     {
-      name: "Evil Corp.",
+      name: "Ladeva Studio",
       logo: Command,
-      plan: "Free",
     },
   ],
-  navMain: [
+  platform: [
     {
-      title: "Products",
-      url: "#",
+      name: "Products",
+      url: "/dashboard/product",
       icon: Server,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
     },
     {
-      title: "Blog",
-      url: "#",
+      name: "Blog",
+      url: "/dashboard/blog",
       icon: Newspaper,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
     },
     {
-      title: "Faq",
-      url: "#",
+      name: "Faq",
+      url: "/dashboard/faq",
       icon: MessageSquareQuote,
-      isActive: true,
-      items: [
-        {
-          title: "Created",
-          url: "/dashboard/faq",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
     },
   ],
   projects: [
     {
-      name: "Desktop",
-      url: "#",
+      title: "Desktop",
+      url: "/dashboard/projects/desktop",
       icon: Monitor,
+      items: [
+        {
+          title: "Backlog",
+          icon: CircleHelp,
+          url: "#",
+        },
+        {
+          title: "Todo",
+          icon: Circle,
+          url: "#",
+        },
+        {
+          title: "In Progres",
+          icon: Clock,
+          url: "#",
+        },
+        {
+          title: "Done",
+          icon: CircleCheck,
+          url: "#",
+        },
+        {
+          title: "Canceled",
+          icon: CircleX,
+          url: "#",
+        },
+      ],
     },
     {
-      name: "Website",
+      title: "Website",
       url: "#",
       icon: MonitorSmartphone,
+      items: [
+        {
+          title: "Backlog",
+          icon: CircleHelp,
+          url: "#",
+        },
+        {
+          title: "Todo",
+          icon: Circle,
+          url: "#",
+        },
+        {
+          title: "In Progres",
+          icon: Clock,
+          url: "#",
+        },
+        {
+          title: "Done",
+          icon: CircleCheck,
+          url: "#",
+        },
+        {
+          title: "Canceled",
+          icon: CircleX,
+          url: "#",
+        },
+      ],
     },
     {
-      name: "Mobile",
+      title: "Mobile",
       url: "#",
       icon: Smartphone,
+      items: [
+        {
+          title: "Backlog",
+          icon: CircleHelp,
+          url: "#",
+        },
+        {
+          title: "Todo",
+          icon: Circle,
+          url: "#",
+        },
+        {
+          title: "In Progres",
+          icon: Clock,
+          url: "#",
+        },
+        {
+          title: "Done",
+          icon: CircleCheck,
+          url: "#",
+        },
+        {
+          title: "Canceled",
+          icon: CircleX,
+          url: "#",
+        },
+      ],
+    },
+  ],
+  others: [
+    {
+      name: "Teams",
+      url: "#",
+      icon: Users,
+    },
+    {
+      name: "Biling",
+      url: "#",
+      icon: CreditCard,
+    },
+    {
+      name: "Settings",
+      url: "#",
+      icon: Settings2,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+    <Sidebar className="bg-zinc-950" collapsible="icon" {...props}>
+      <SidebarHeader className="border-b h-16 flex items-center justify-center">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavItemLink title="Platform Content" items={data.platform} />
+        <NavMain title="Projects" items={data.projects} />
+        <NavItemLink title="Others" items={data.others} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser />
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
