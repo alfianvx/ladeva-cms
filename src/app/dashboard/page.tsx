@@ -1,3 +1,5 @@
+import Dashboard from "@/components/pages/dashboard";
+
 export default function Page() {
-  return <h1>Dashboard Content</h1>;
+  return <Dashboard />;
 }
