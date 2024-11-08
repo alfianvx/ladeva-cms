@@ -6,6 +6,12 @@ export function useRouterParams() {
   const pathname = usePathname();
   const params = useParams();
 
+  // Check if the current route is dynamic
+  const isDynamicRoute = () => {
+    // If there are any params, it means we're on a dynamic route
+    return Object.keys(params).length > 0;
+  };
+
   // Convert params object to array and clean up the values
   const getParamsArray = () => {
     const segments = pathname.split("/").filter(Boolean);
@@ -44,5 +50,7 @@ export function useRouterParams() {
     params,
     pathname,
     segments: getParamsArray(),
+    isDynamic: isDynamicRoute(),
+    shouldShowRoute: !isDynamicRoute(), // Will be false for dynamic routes
   };
 }
