@@ -50,7 +50,7 @@ export default async function DashboardLayout({
               </div>
             </div>
           </header>
-          <section className="p-4 ">{children}</section>
+          <section>{children}</section>
         </SidebarInset>
       </SidebarProvider>
     </SessionProvider>

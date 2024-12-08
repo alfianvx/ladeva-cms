@@ -7,21 +7,25 @@ import {
   GalleryVerticalEnd,
   Settings2,
   MessageSquareQuote,
-  Newspaper,
   Server,
-  Monitor,
-  Smartphone,
-  MonitorSmartphone,
-  CircleHelp,
-  CircleCheck,
-  CircleX,
-  Circle,
-  Clock,
+  // Monitor,
+  // Smartphone,
+  // MonitorSmartphone,
+  // CircleHelp,
+  // CircleCheck,
+  // CircleX,
+  // Circle,
+  // Clock,
   Users,
   CreditCard,
+  Pickaxe,
+  Handshake,
+  Workflow,
+  MessageCircleHeart,
+  BadgePercent,
 } from "lucide-react";
 
-import { NavMain } from "@/components/nav-main";
+// import { NavMain } from "@/components/nav-main";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
@@ -49,119 +53,139 @@ const data = {
   ],
   platform: [
     {
-      name: "Products",
+      name: "Product",
       url: "/dashboard/product",
       icon: Server,
     },
     {
-      name: "Blog",
-      url: "/dashboard/blog",
-      icon: Newspaper,
+      name: "Pricing",
+      url: "/dashboard/pricing",
+      icon: BadgePercent,
+    },
+    {
+      name: "Service",
+      url: "/dashboard/service",
+      icon: Pickaxe,
     },
     {
       name: "Faq",
       url: "/dashboard/faq",
       icon: MessageSquareQuote,
     },
-  ],
-  projects: [
     {
-      title: "Desktop",
-      url: "/dashboard/projects/desktop",
-      icon: Monitor,
-      items: [
-        {
-          title: "Backlog",
-          icon: CircleHelp,
-          url: "#",
-        },
-        {
-          title: "Todo",
-          icon: Circle,
-          url: "#",
-        },
-        {
-          title: "In Progres",
-          icon: Clock,
-          url: "#",
-        },
-        {
-          title: "Done",
-          icon: CircleCheck,
-          url: "#",
-        },
-        {
-          title: "Canceled",
-          icon: CircleX,
-          url: "#",
-        },
-      ],
+      name: "Client",
+      url: "/dashboard/client",
+      icon: Handshake,
     },
     {
-      title: "Website",
-      url: "#",
-      icon: MonitorSmartphone,
-      items: [
-        {
-          title: "Backlog",
-          icon: CircleHelp,
-          url: "#",
-        },
-        {
-          title: "Todo",
-          icon: Circle,
-          url: "#",
-        },
-        {
-          title: "In Progres",
-          icon: Clock,
-          url: "#",
-        },
-        {
-          title: "Done",
-          icon: CircleCheck,
-          url: "#",
-        },
-        {
-          title: "Canceled",
-          icon: CircleX,
-          url: "#",
-        },
-      ],
+      name: "Workflow",
+      url: "/dashboard/workflow",
+      icon: Workflow,
     },
     {
-      title: "Mobile",
-      url: "#",
-      icon: Smartphone,
-      items: [
-        {
-          title: "Backlog",
-          icon: CircleHelp,
-          url: "#",
-        },
-        {
-          title: "Todo",
-          icon: Circle,
-          url: "#",
-        },
-        {
-          title: "In Progres",
-          icon: Clock,
-          url: "#",
-        },
-        {
-          title: "Done",
-          icon: CircleCheck,
-          url: "#",
-        },
-        {
-          title: "Canceled",
-          icon: CircleX,
-          url: "#",
-        },
-      ],
+      name: "Testimonial",
+      url: "/dashboard/testimonial",
+      icon: MessageCircleHeart,
     },
   ],
+  // projects: [
+  //   {
+  //     title: "Desktop",
+  //     url: "/dashboard/projects/desktop",
+  //     icon: Monitor,
+  //     items: [
+  //       {
+  //         title: "Backlog",
+  //         icon: CircleHelp,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Todo",
+  //         icon: Circle,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "In Progres",
+  //         icon: Clock,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Done",
+  //         icon: CircleCheck,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Canceled",
+  //         icon: CircleX,
+  //         url: "#",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Website",
+  //     url: "#",
+  //     icon: MonitorSmartphone,
+  //     items: [
+  //       {
+  //         title: "Backlog",
+  //         icon: CircleHelp,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Todo",
+  //         icon: Circle,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "In Progres",
+  //         icon: Clock,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Done",
+  //         icon: CircleCheck,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Canceled",
+  //         icon: CircleX,
+  //         url: "#",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "Mobile",
+  //     url: "#",
+  //     icon: Smartphone,
+  //     items: [
+  //       {
+  //         title: "Backlog",
+  //         icon: CircleHelp,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Todo",
+  //         icon: Circle,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "In Progres",
+  //         icon: Clock,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Done",
+  //         icon: CircleCheck,
+  //         url: "#",
+  //       },
+  //       {
+  //         title: "Canceled",
+  //         icon: CircleX,
+  //         url: "#",
+  //       },
+  //     ],
+  //   },
+  // ],
   others: [
     {
       name: "Teams",
@@ -189,7 +213,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavItemLink title="Platform Content" items={data.platform} />
-        <NavMain title="Projects" items={data.projects} />
+        {/* <NavMain title="Projects" items={data.projects} /> */}
         <NavItemLink title="Others" items={data.others} />
       </SidebarContent>
       <SidebarRail />

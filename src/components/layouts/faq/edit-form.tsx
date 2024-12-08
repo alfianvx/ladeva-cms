@@ -17,18 +17,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { FaqFormSchema } from "@/types/validation/Faq";
+import { FaqFormSchema } from "@/types/validation/faq.validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateFaqContent } from "@/services/platform/faq";
+import { updateFaqContent } from "@/services/dashboard/faq";
 import { useSession } from "next-auth/react";
-import { CircleX, Loader, Save } from "lucide-react";
+import { CircleX, LoaderCircle, Save } from "lucide-react";
 
 type TFaq = {
   answer: string;
-  createdAt: "2024-11-04T03:56:04.314Z";
   id: string;
   question: string;
-  updatedAt: string;
 };
 
 export default function EditFaqForm({ data }: { data: TFaq }) {
@@ -104,7 +102,7 @@ export default function EditFaqForm({ data }: { data: TFaq }) {
               </Button>
               <Button type="submit" disabled={mutation.isPending}>
                 {mutation.isPending ? (
-                  <Loader className="animate-spin" />
+                  <LoaderCircle className="animate-spin" />
                 ) : (
                   <Save />
                 )}
