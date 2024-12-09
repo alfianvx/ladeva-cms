@@ -25,7 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "next-auth/react";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useTheme } from "next-themes";

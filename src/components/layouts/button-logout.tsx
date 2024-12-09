@@ -1,7 +1,7 @@
 import { LogOut } from "lucide-react";
-import { Button } from "./ui/button";
-import { DropdownMenuItem } from "./ui/dropdown-menu";
-import { signOut } from "../../auth";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { signOut } from "../../../auth";
+import { Button } from "../ui/button";
 
 function ButtonLogout() {
   return (

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../../auth";
 import { redirect } from "next/navigation";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/layouts/sidebar/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -10,7 +10,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
-import { NavUser } from "@/components/nav-user";
+import { NavUser } from "@/components/layouts/sidebar/nav-user";
 import { ThemeSwithcer } from "@/components/theme-switcher";
 
 export const metadata: Metadata = {

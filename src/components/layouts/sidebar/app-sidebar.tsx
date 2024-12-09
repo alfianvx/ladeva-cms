@@ -16,24 +16,25 @@ import {
   // CircleX,
   // Circle,
   // Clock,
+  User,
   Users,
-  CreditCard,
   Pickaxe,
   Handshake,
   Workflow,
   MessageCircleHeart,
   BadgePercent,
+  Origami,
 } from "lucide-react";
 
 // import { NavMain } from "@/components/nav-main";
-import { TeamSwitcher } from "@/components/team-switcher";
+import { TeamSwitcher } from "@/components/layouts/sidebar/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { NavItemLink } from "./nav-item-link";
+import { NavItem } from "./nav-item";
 
 // This is sample data.
 const data = {
@@ -53,39 +54,44 @@ const data = {
   ],
   platform: [
     {
-      name: "Product",
+      name: "Produk",
       url: "/dashboard/product",
       icon: Server,
     },
     {
-      name: "Pricing",
+      name: "Harga",
       url: "/dashboard/pricing",
       icon: BadgePercent,
     },
     {
-      name: "Service",
+      name: "Pelayanan",
       url: "/dashboard/service",
       icon: Pickaxe,
     },
     {
-      name: "Faq",
+      name: "Tanya Jawab",
       url: "/dashboard/faq",
       icon: MessageSquareQuote,
     },
     {
-      name: "Client",
+      name: "Partner",
       url: "/dashboard/client",
       icon: Handshake,
     },
     {
-      name: "Workflow",
+      name: "Alur Kerja",
       url: "/dashboard/workflow",
       icon: Workflow,
     },
     {
-      name: "Testimonial",
+      name: "Testimoni",
       url: "/dashboard/testimonial",
       icon: MessageCircleHeart,
+    },
+    {
+      name: "Portofolio",
+      url: "/dashboard/portofolio",
+      icon: Origami,
     },
   ],
   // projects: [
@@ -188,18 +194,18 @@ const data = {
   // ],
   others: [
     {
-      name: "Teams",
-      url: "#",
+      name: "Akun",
+      url: "/dashboard/profile",
+      icon: User,
+    },
+    {
+      name: "Member",
+      url: "/dashboard/teams",
       icon: Users,
     },
     {
-      name: "Biling",
-      url: "#",
-      icon: CreditCard,
-    },
-    {
-      name: "Settings",
-      url: "#",
+      name: "Pengaturan",
+      url: "/dashboard/setting",
       icon: Settings2,
     },
   ],
@@ -212,9 +218,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavItemLink title="Platform Content" items={data.platform} />
+        <NavItem title="Menu CMS" items={data.platform} />
         {/* <NavMain title="Projects" items={data.projects} /> */}
-        <NavItemLink title="Others" items={data.others} />
+        <NavItem title="Lainnya" items={data.others} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
