@@ -1,4 +1,4 @@
-import ClientContent from "@/components/layouts/client/client-content";
+import ClientContent from "@/components/layouts/client/client-main";
 import Header from "@/components/layouts/header";
 import React from "react";
 

@@ -1,9 +1,6 @@
 import { z } from "zod";
 
 export const ClientFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "Nama client tidak boleh kosong!" })
-    .max(50),
-  image: z.string(),
+  name: z.string({ message: "Nama partner tidak boleh kosong" }),
+  logo_url: z.string().optional(),
 });

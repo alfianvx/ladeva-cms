@@ -1,46 +1,53 @@
 import { http } from "@/lib/http";
 import { TClientForm } from "@/types/schema/Client";
-import { TFaqForm } from "@/types/schema/Faq";
 
-export const getFaqsContent = () => {
-  return http.get("/faq").then((response) => response.data);
+export const getClients = async () => {
+  return await http.get("/client").then((response) => response.data);
 };
 
-export const getFaqContentById = (id: string, token: string | undefined) => {
-  return http.get(`/faq/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getClientById = async (id: string, token: string | undefined) => {
+  return await http
+    .get(`/client/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
 };
 
-export const deleteFaqContent = (id: string, token: string | undefined) => {
-  return http.delete(`/faq/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const deleteClient = async (id: string, token: string | undefined) => {
+  return await http
+    .delete(`/client/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
 };
 
-export const createClientContent = (
+export const createClient = async (
   data: TClientForm,
   token: string | undefined
 ) => {
-  return http.post("/client", data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await http
+    .post("/client", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
 };
 
-export const updateFaqContent = (
+export const updateClient = async (
   id: string,
-  data: TFaqForm,
+  data: TClientForm,
   token: string | undefined
 ) => {
-  return http.put(`/faq/${id}`, data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await http
+    .put(`/client/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
 };

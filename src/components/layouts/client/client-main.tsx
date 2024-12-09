@@ -1,10 +1,12 @@
 "use client";
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteFaqContent, getFaqsContent } from "@/services/dashboard/faq";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,44 +17,35 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useSession } from "next-auth/react";
-import { Loader, Pencil, Plus, Trash2 } from "lucide-react";
-import Link from "next/link";
+import Loading from "@/app/loading";
+import { deleteClient, getClients } from "@/services/dashboard/client";
+import { TClient } from "@/types/schema/Client";
+import Image from "next/image";
 
-type TFaq = {
-  id: string;
-  question: string;
-  answer: string;
-};
-
-export default function ClientContent() {
-  const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["GET_FAQS"],
-    queryFn: getFaqsContent,
-  });
-
+export default function ClientMain() {
   const queryClient = useQueryClient();
   const session = useSession();
   const token = session.data?.access_token;
 
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["GET_CLIENTS"],
+    queryFn: getClients,
+  });
+
   const mutation = useMutation({
-    mutationKey: ["DELETE_FAQ"],
-    mutationFn: (id: string) => deleteFaqContent(id, token),
+    mutationKey: ["DELETE_CLIENT"],
+    mutationFn: (id: string) => deleteClient(id, token),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["GET_FAQS"] });
+      queryClient.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
     },
   });
 
-  const handleDeleteFaq = (id: string) => {
+  const handleDeleteTestimonial = (id: string) => {
     mutation.mutate(id);
   };
 
   if (isLoading && isFetching) {
-    return (
-      <div className="flex justify-center items-center my-56">
-        <Loader className="animate-spin" />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (data.data.length === 0)
@@ -68,15 +61,28 @@ export default function ClientContent() {
     );
 
   return (
-    <section className="my-10">
-      {data.data.map((item: TFaq) => (
-        <Card key={1} className="max-w-3xl mx-auto my-3">
-          <CardContent className="pt-[24px]">
-            <p>list client</p>
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
+      {data.data.map((item: TClient) => (
+        <Card key={item.id}>
+          <CardContent className="flex flex-col gap-5 justify-center items-center mt-[24px]">
+            <div className="w-56 h-24 flex justify-center">
+              <Image
+                className="object-contain"
+                src={item.logo_url}
+                alt={item.name}
+                priority
+                layout="responsive"
+                width={100}
+                height={100}
+              />
+            </div>
+            <div>
+              <h1 className="text-md font-semibold">{item.name}</h1>
+            </div>
           </CardContent>
-          <CardFooter className="flex gap-3 justify-end">
+          <CardFooter className="flex gap-3 items-center justify-center">
             <Button asChild>
-              <Link href={`/dashboard/faq/edit/${item.id}`}>
+              <Link href={`/dashboard/client/edit/${item.id}`}>
                 <Pencil /> Edit
               </Link>
             </Button>
@@ -99,10 +105,10 @@ export default function ClientContent() {
                   <AlertDialogCancel>Batal</AlertDialogCancel>
                   <Button
                     variant="destructive"
-                    onClick={() => handleDeleteFaq(item.id)}
+                    onClick={() => handleDeleteTestimonial(item.id)}
                   >
                     {mutation.isPending ? (
-                      <Loader className="animate-spin" />
+                      <LoaderCircle className="animate-spin" />
                     ) : (
                       <Trash2 />
                     )}{" "}
