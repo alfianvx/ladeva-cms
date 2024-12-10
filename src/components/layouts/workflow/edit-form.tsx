@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { z } from "zod";
 import React from "react";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -21,64 +21,62 @@ import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { CircleX, LoaderCircle, Save } from "lucide-react";
-import { toast } from "sonner";
-import { AxiosError } from "axios";
-import { UploadButton } from "@uploadthing/react";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import Image from "next/image";
-import { createServiceContent } from "@/services/dashboard/service";
-import { ServiceFormSchema } from "@/types/validation/service.validation";
+import { TService } from "@/types/schema/Service";
 import { Textarea } from "@/components/ui/textarea";
+import { WorkflowFormSchema } from "@/types/validation/workflow.validation";
+import { updateWorkflowContent } from "@/services/dashboard/workflow";
+// import { updateServiceContent } from "@/services/dashboard/service";
+// import { UploadButton } from "@uploadthing/react";
+// import { OurFileRouter } from "@/app/api/uploadthing/core";
+// import Image from "next/image";
 
-export default function CreateServiceForm() {
-  const queryClient = useQueryClient();
+export default function EditWorkflowForm({ data }: { data: TService }) {
   const router = useRouter();
   const session = useSession();
-
   const token = session.data?.access_token;
+  const query = useQueryClient();
 
-  const [iconPreview, setIconPreview] = React.useState<string | null>(null);
+  // const [iconPreview, setIconPreview] = React.useState<string | null>(
+  //   data.icon_url
+  // );
 
-  const form = useForm<z.infer<typeof ServiceFormSchema>>({
-    resolver: zodResolver(ServiceFormSchema),
+  const form = useForm<z.infer<typeof WorkflowFormSchema>>({
+    resolver: zodResolver(WorkflowFormSchema),
     defaultValues: {
-      icon_url:
-        "https://utfs.io/f/YdQML4nhRlwkN90TMSCGVd7pO39Ng1cK06SyfhsAHe4BCkuJ",
+      title: data.title,
+      description: data.description,
+      icon_url: data.icon_url,
     },
   });
 
   const mutation = useMutation({
-    mutationKey: ["CREATE_SERVICE"],
-    mutationFn: (values: z.infer<typeof ServiceFormSchema>) =>
-      createServiceContent(values, token),
+    mutationKey: ["UPDATE_WORKFLOW", data.id],
+    mutationFn: (values: z.infer<typeof WorkflowFormSchema>) =>
+      updateWorkflowContent(data.id, values, token),
     onSuccess: () => {
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
-      router.push("/dashboard/service");
+      router.push("/dashboard/workflow");
+      query.invalidateQueries({ queryKey: ["GET_WORKFLOWS"] });
     },
     onError: (error) => {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
+      console.error("Submission error:", error);
     },
   });
 
-  function onSubmit(values: z.infer<typeof ServiceFormSchema>) {
+  function onSubmit(values: z.infer<typeof WorkflowFormSchema>) {
     mutation.mutate(values);
   }
 
-  function deleteIcon() {
-    form.setValue("icon_url", "");
-    setIconPreview(null);
-  }
+  // function deleteIcon() {
+  //   form.setValue("icon_url", "");
+  //   setIconPreview(null);
+  // }
 
   return (
     <section className="p-4">
-      <div className="grid grid-cols-3 mb-4">
+      {/* <div className="grid grid-cols-3 mb-4">
         <div className="col-span-1 items-center">
-          <label className="text-base">Upload Icon</label>
+          <label className="text-base">Upload Logo</label>
           <span className="text-xs ml-3">( opsional )</span>
         </div>
         <div className="col-span-2 flex items-center gap-3">
@@ -94,16 +92,19 @@ export default function CreateServiceForm() {
               setIconPreview(file[0].appUrl);
             }}
           />
-          {iconPreview && (
+          {form.getValues("icon_url") !== "" && iconPreview !== null ? (
             <div className="relative">
-              <Image
-                src={iconPreview}
-                priority
-                alt="avatar"
-                width={100}
-                height={100}
-                className="h-full w-32 object-cover rounded-lg"
-              />
+              <div className="w-56 h-24 flex justify-center">
+                <Image
+                  className="object-contain"
+                  src={form.getValues("icon_url") ?? iconPreview}
+                  alt="logo"
+                  priority
+                  layout="responsive"
+                  width={100}
+                  height={100}
+                />
+              </div>
               <Button
                 size="icon"
                 className="rounded-full absolute -top-3 -right-3 p-1"
@@ -112,9 +113,9 @@ export default function CreateServiceForm() {
                 <CircleX size={10} />
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
-      </div>
+      </div> */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -151,7 +152,7 @@ export default function CreateServiceForm() {
           />
           <div className="flex items-center justify-end gap-3 mt-4">
             <Button variant="destructive" asChild>
-              <Link href="/dashboard/service">
+              <Link href="/dashboard/workdflow">
                 <CircleX /> Batal
               </Link>
             </Button>
@@ -161,7 +162,7 @@ export default function CreateServiceForm() {
               ) : (
                 <Save />
               )}
-              {mutation.isPending ? "Menyimpan..." : "Simpan"}
+              {mutation.isPending ? "Mengupdate..." : "Update"}
             </Button>
           </div>
         </form>

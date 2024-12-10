@@ -23,24 +23,24 @@ import { useSession } from "next-auth/react";
 import { CircleX, LoaderCircle, Save } from "lucide-react";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { UploadButton } from "@uploadthing/react";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import Image from "next/image";
-import { createServiceContent } from "@/services/dashboard/service";
-import { ServiceFormSchema } from "@/types/validation/service.validation";
 import { Textarea } from "@/components/ui/textarea";
+import { WorkflowFormSchema } from "@/types/validation/workflow.validation";
+import { createWorkflowContent } from "@/services/dashboard/workflow";
+// import { UploadButton } from "@uploadthing/react";
+// import { OurFileRouter } from "@/app/api/uploadthing/core";
+// import Image from "next/image";
 
-export default function CreateServiceForm() {
+export default function CreateWorkflowForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const session = useSession();
 
   const token = session.data?.access_token;
 
-  const [iconPreview, setIconPreview] = React.useState<string | null>(null);
+  // const [iconPreview, setIconPreview] = React.useState<string | null>(null);
 
-  const form = useForm<z.infer<typeof ServiceFormSchema>>({
-    resolver: zodResolver(ServiceFormSchema),
+  const form = useForm<z.infer<typeof WorkflowFormSchema>>({
+    resolver: zodResolver(WorkflowFormSchema),
     defaultValues: {
       icon_url:
         "https://utfs.io/f/YdQML4nhRlwkN90TMSCGVd7pO39Ng1cK06SyfhsAHe4BCkuJ",
@@ -48,13 +48,13 @@ export default function CreateServiceForm() {
   });
 
   const mutation = useMutation({
-    mutationKey: ["CREATE_SERVICE"],
-    mutationFn: (values: z.infer<typeof ServiceFormSchema>) =>
-      createServiceContent(values, token),
+    mutationKey: ["CREATE_WORKFLOW"],
+    mutationFn: (values: z.infer<typeof WorkflowFormSchema>) =>
+      createWorkflowContent(values, token),
     onSuccess: () => {
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
-      router.push("/dashboard/service");
+      queryClient.invalidateQueries({ queryKey: ["GET_WORKFLOWS"] });
+      router.push("/dashboard/workflow");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
@@ -65,18 +65,18 @@ export default function CreateServiceForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof ServiceFormSchema>) {
+  function onSubmit(values: z.infer<typeof WorkflowFormSchema>) {
     mutation.mutate(values);
   }
 
-  function deleteIcon() {
-    form.setValue("icon_url", "");
-    setIconPreview(null);
-  }
+  // function deleteIcon() {
+  //   form.setValue("icon_url", "");
+  //   setIconPreview(null);
+  // }
 
   return (
     <section className="p-4">
-      <div className="grid grid-cols-3 mb-4">
+      {/* <div className="grid grid-cols-3 mb-4">
         <div className="col-span-1 items-center">
           <label className="text-base">Upload Icon</label>
           <span className="text-xs ml-3">( opsional )</span>
@@ -114,7 +114,7 @@ export default function CreateServiceForm() {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -151,7 +151,7 @@ export default function CreateServiceForm() {
           />
           <div className="flex items-center justify-end gap-3 mt-4">
             <Button variant="destructive" asChild>
-              <Link href="/dashboard/service">
+              <Link href="/dashboard/workflow">
                 <CircleX /> Batal
               </Link>
             </Button>
