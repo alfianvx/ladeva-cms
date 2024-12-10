@@ -1,11 +1,11 @@
 import Loading from "@/app/loading";
-import MainService from "@/components/pages/service/main";
+import CreateService from "@/components/pages/service/create-service";
 import { Suspense } from "react";
 
 export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
-      <MainService />
+      <CreateService />
     </Suspense>
   );
 }

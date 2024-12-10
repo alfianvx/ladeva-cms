@@ -24,49 +24,51 @@ import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/app/api/uploadthing/core";
 import Image from "next/image";
 import React from "react";
-import { TClient } from "@/types/schema/Client";
-import { ClientFormSchema } from "@/types/validation/client.validation";
-import { updateClient } from "@/services/dashboard/client";
+import { TService } from "@/types/schema/Service";
+import { ServiceFormSchema } from "@/types/validation/service.validation";
+import { updateServiceContent } from "@/services/dashboard/service";
+import { Textarea } from "@/components/ui/textarea";
 
-export default function EditClientForm({ data }: { data: TClient }) {
+export default function EditServiceForm({ data }: { data: TService }) {
   const router = useRouter();
   const session = useSession();
   const token = session.data?.access_token;
   const query = useQueryClient();
 
-  const [logoPreview, setLogoPreview] = React.useState<string | null>(
-    data.logo_url
+  const [iconPreview, setIconPreview] = React.useState<string | null>(
+    data.icon_url
   );
 
-  const form = useForm<z.infer<typeof ClientFormSchema>>({
-    resolver: zodResolver(ClientFormSchema),
+  const form = useForm<z.infer<typeof ServiceFormSchema>>({
+    resolver: zodResolver(ServiceFormSchema),
     defaultValues: {
-      name: data.name,
-      logo_url: data.logo_url,
+      title: data.title,
+      description: data.description,
+      icon_url: data.icon_url,
     },
   });
 
   const mutation = useMutation({
-    mutationKey: ["UPDATE_CLIENT", data.id],
-    mutationFn: (values: z.infer<typeof ClientFormSchema>) =>
-      updateClient(data.id, values, token),
+    mutationKey: ["UPDATE_SERVICE", data.id],
+    mutationFn: (values: z.infer<typeof ServiceFormSchema>) =>
+      updateServiceContent(data.id, values, token),
     onSuccess: () => {
       form.reset();
-      router.push("/dashboard/client");
-      query.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
+      router.push("/dashboard/service");
+      query.invalidateQueries({ queryKey: ["GET_SERVICES"] });
     },
     onError: (error) => {
       console.error("Submission error:", error);
     },
   });
 
-  function onSubmit(values: z.infer<typeof ClientFormSchema>) {
+  function onSubmit(values: z.infer<typeof ServiceFormSchema>) {
     mutation.mutate(values);
   }
 
-  function deleteAvatar() {
-    form.setValue("logo_url", "");
-    setLogoPreview(null);
+  function deleteIcon() {
+    form.setValue("icon_url", "");
+    setIconPreview(null);
   }
 
   return (
@@ -85,16 +87,16 @@ export default function EditClientForm({ data }: { data: TClient }) {
                 "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-300 border-zinc-800 ",
             }}
             onClientUploadComplete={(file) => {
-              form.setValue("logo_url", file[0].appUrl);
-              setLogoPreview(file[0].appUrl);
+              form.setValue("icon_url", file[0].appUrl);
+              setIconPreview(file[0].appUrl);
             }}
           />
-          {form.getValues("logo_url") !== "" && logoPreview !== null ? (
+          {form.getValues("icon_url") !== "" && iconPreview !== null ? (
             <div className="relative">
               <div className="w-56 h-24 flex justify-center">
                 <Image
                   className="object-contain"
-                  src={form.getValues("logo_url") ?? logoPreview}
+                  src={form.getValues("icon_url") ?? iconPreview}
                   alt="logo"
                   priority
                   layout="responsive"
@@ -105,7 +107,7 @@ export default function EditClientForm({ data }: { data: TClient }) {
               <Button
                 size="icon"
                 className="rounded-full absolute -top-3 -right-3 p-1"
-                onClick={deleteAvatar}
+                onClick={deleteIcon}
               >
                 <CircleX size={10} />
               </Button>
@@ -117,12 +119,10 @@ export default function EditClientForm({ data }: { data: TClient }) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="name"
+            name="title"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3">
-                <FormLabel className="col-span-1 text-base">
-                  Nama Perusahaan
-                </FormLabel>
+                <FormLabel className="col-span-1 text-base">Title</FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
                     <Input {...field} />
@@ -132,9 +132,26 @@ export default function EditClientForm({ data }: { data: TClient }) {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3">
+                <FormLabel className="col-span-1 text-base">
+                  Deskripsi Layanan
+                </FormLabel>
+                <div className="col-span-2 space-y-2">
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
           <div className="flex items-center justify-end gap-3 mt-4">
             <Button variant="destructive" asChild>
-              <Link href="/dashboard/client">
+              <Link href="/dashboard/service">
                 <CircleX /> Batal
               </Link>
             </Button>
