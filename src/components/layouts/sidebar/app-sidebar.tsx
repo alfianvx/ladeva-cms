@@ -22,8 +22,8 @@ import {
   Handshake,
   Workflow,
   MessageCircleHeart,
-  BadgePercent,
   Origami,
+  HandCoins,
 } from "lucide-react";
 
 // import { NavMain } from "@/components/nav-main";
@@ -59,9 +59,9 @@ const data = {
       icon: Server,
     },
     {
-      name: "Harga",
+      name: "Penawaran",
       url: "/dashboard/pricing",
-      icon: BadgePercent,
+      icon: HandCoins,
     },
     {
       name: "Pelayanan",
