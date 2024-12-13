@@ -87,7 +87,7 @@ export default function CreateProductForm() {
   }
 
   function deleteThumbnail() {
-    form.setValue("logo_url", "");
+    form.setValue("thumbnail_url", "");
     setThumbnailPreview(null);
   }
 
@@ -146,7 +146,7 @@ export default function CreateProductForm() {
                 "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-300 border-zinc-800 ",
             }}
             onClientUploadComplete={(file) => {
-              form.setValue("logo_url", file[0].appUrl);
+              form.setValue("thumbnail_url", file[0].appUrl);
               setThumbnailPreview(file[0].appUrl);
             }}
           />
@@ -207,50 +207,26 @@ export default function CreateProductForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={() => (
-              <FormItem className="grid grid-cols-3 space-y-0">
-                <FormLabel className="col-span-1 text-base">
-                  Deskripsi
-                </FormLabel>
-                <div className="col-span-2 space-y-2">
-                  {/* <Editor
-                    ref={editorRef}
-                    toolBarClassName="w-full"
-                    editorProps={{
-                      attributes: {
-                        class:
-                          "py-6 px-8 prose prose-base prose-blue prose-headings:scroll-mt-[80px] dark:prose-invert",
-                      },
-                    }}
-                    onUpdate={({ editor }) => {
-                      const html = !editor.isEmpty ? editor.getHTML() : "";
-                      form.setValue("description", html);
-                    }}
-                  /> */}
-                </div>
-              </FormItem>
-            )}
-          />
         </form>
       </Form>
-      <div className="border rounded-lg">
-        <Editor
-          ref={editorRef}
-          toolBarClassName="w-full"
-          editorProps={{
-            attributes: {
-              class:
-                "py-6 px-8 prose prose-base prose-blue prose-headings:scroll-mt-[80px] dark:prose-invert",
-            },
-          }}
-          onUpdate={({ editor }) => {
-            const html = !editor.isEmpty ? editor.getHTML() : "";
-            form.setValue("description", html);
-          }}
-        />
+      <div className="grid grid-cols-3 my-4">
+        <label className="col-span-1">Deskripsi</label>
+        <div className="border rounded-lg col-span-2">
+          <Editor
+            ref={editorRef}
+            toolBarClassName="w-full"
+            editorProps={{
+              attributes: {
+                class:
+                  "py-6 px-8 prose prose-base prose-blue prose-headings:scroll-mt-[80px] dark:prose-invert",
+              },
+            }}
+            onUpdate={({ editor }) => {
+              const html = !editor.isEmpty ? editor.getHTML() : "";
+              form.setValue("description", html);
+            }}
+          />
+        </div>
       </div>
       <div className="flex items-center justify-end gap-3 mt-4">
         <Button variant="destructive" asChild>

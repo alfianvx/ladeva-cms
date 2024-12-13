@@ -55,7 +55,6 @@ export const MenuButtonImage = ({ editor }: MenuButtonImageProps) => {
                   .run();
               }
               setIsUploading(false);
-              toast("Image uploaded successfully");
             }}
             onUploadError={(error: Error) => {
               toast("Failed to upload image: " + error.message);

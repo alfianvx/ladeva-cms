@@ -13,7 +13,7 @@ type THeader = {
 
 export default function Header(props: THeader) {
   return (
-    <div className="flex items-center justify-between h-16 px-4">
+    <div className="flex items-center justify-between h-16 px-4 z-50">
       <h1 className="text-xl font-semibold">{props.title}</h1>
       {props.isCreateMode ? null : (
         <Button asChild>
