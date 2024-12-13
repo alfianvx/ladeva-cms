@@ -4,6 +4,7 @@ export type TMember = {
   avatar: string;
   email: string;
   role: string;
+  createdAt: string;
 };
 
 export type TMemberForm = {

@@ -16,6 +16,7 @@ import {
 import { getMembers } from "@/services/dashboard/member";
 import { TMember } from "@/types/schema/Member";
 import { Badge } from "@/components/ui/badge";
+import { convertDate } from "@/utils/dateConverter";
 
 export default function MemberList() {
   const session = useSession();
@@ -44,6 +45,7 @@ export default function MemberList() {
           <TableRow>
             <TableHead className="py-4">Nama</TableHead>
             <TableHead className="py-4">Email</TableHead>
+            <TableHead className="py-4">Tanggal Join</TableHead>
             <TableHead className="text-right py-4">Role</TableHead>
           </TableRow>
         </TableHeader>
@@ -52,6 +54,9 @@ export default function MemberList() {
             <TableRow key={item.id}>
               <TableCell className="font-medium py-4">{item.name}</TableCell>
               <TableCell className="font-medium py-4">{item.email}</TableCell>
+              <TableCell className="font-medium py-4">
+                {convertDate(item.createdAt)}
+              </TableCell>
               <TableCell className="text-right">
                 <Badge>{item.role}</Badge>
               </TableCell>
