@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Loader2 } from "lucide-react";
+import { LoaderCircle, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,38 +25,67 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  avatar: z.string(),
-});
+import { UserUpdateFormSchema } from "@/types/validation/user.validation";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { updateProfile } from "@/services/dashboard/user";
+import { toast } from "sonner";
 
 export default function UserProfileForm() {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
+  const router = useRouter();
+  const token = session?.access_token;
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof UserUpdateFormSchema>>({
+    resolver: zodResolver(UserUpdateFormSchema),
     defaultValues: {
-      name: session?.user.name,
-      email: session?.user.email,
-      avatar: session?.user.avatar,
+      name: session?.user.name || "",
+      email: session?.user.email || "",
+      avatar: session?.user.avatar || "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const mutation = useMutation({
+    mutationKey: ["UPDATE_PROFILE", session?.user.id],
+    mutationFn: (values: z.infer<typeof UserUpdateFormSchema>) =>
+      updateProfile(session?.user.id, values, token),
+    onSuccess: async (response) => {
+      console.log("Update response:", response.data.data);
+
+      update({
+        ...session,
+        user: {
+          ...session?.user,
+          name: response.data.data.name,
+          email: response.data.data.email,
+          avatar: response.data.data.avatar,
+        },
+      });
+
+      form.reset({
+        name: response.data.data.name,
+        email: response.data.data.email,
+        avatar: response.data.data.avatar,
+      });
+
+      toast.success("Profile successfully updated.");
+      router.push("/dashboard/profile");
+    },
+    onError: (error) => {
+      console.error("Submission error:", error);
+      toast.error("Failed to update profile.");
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof UserUpdateFormSchema>) {
+    mutation.mutate(values);
   }
 
   return (
     <div className="p-4">
       <Card className="w-full mx-auto">
         <CardHeader>
-          <CardTitle>Profil Saya</CardTitle>
+          <CardTitle>My Profile</CardTitle>
           <CardDescription>Update your personal information</CardDescription>
         </CardHeader>
         <CardContent>
@@ -64,35 +93,12 @@ export default function UserProfileForm() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div className="flex items-center space-x-4">
                 <Avatar className="w-24 h-24">
-                  <AvatarImage src={form.getValues("avatar")} alt="Avatar" />
+                  <AvatarImage
+                    src={form.getValues("avatar") || session?.user.avatar}
+                    alt="Avatar"
+                  />
                   <AvatarFallback>UN</AvatarFallback>
                 </Avatar>
-                {/* <FormField
-                control={form.control}
-                name="avatar"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel
-                      htmlFor="avatar-upload"
-                      className="cursor-pointer"
-                    >
-                      <div className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground">
-                        <Upload className="w-4 h-4" />
-                        <span>Upload new avatar</span>
-                      </div>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        id="avatar-upload"
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleAvatarChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              /> */}
               </div>
               <FormField
                 control={form.control}
@@ -120,11 +126,13 @@ export default function UserProfileForm() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Button type="submit" disabled={mutation.isPending}>
+                {mutation.isPending ? (
+                  <LoaderCircle className="animate-spin" />
+                ) : (
+                  <Save />
                 )}
-                Update Profil
+                {mutation.isPending ? "Updating..." : "Update Profile"}
               </Button>
             </form>
           </Form>
