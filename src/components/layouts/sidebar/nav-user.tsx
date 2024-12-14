@@ -65,27 +65,29 @@ export function NavUser() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/">
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/dashboard">
               <LayoutDashboard />
               Dashboard
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/">
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/dashboard/setting">
               <Settings2 />
-              Settings
+              Pengaturan
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <CircleUserIcon />
-            Account
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/dashboard/profile">
+              <CircleUserIcon />
+              Akun
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger className="cursor-pointer">
               {theme === "system" ? (
                 <Monitor />
               ) : theme === "light" ? (
@@ -97,13 +99,22 @@ export function NavUser() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => setTheme("system")}
+                >
                   <Monitor /> System
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("light")}>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => setTheme("light")}
+                >
                   <Sun /> Light
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => setTheme("dark")}
+                >
                   <MoonStar /> Dark
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
@@ -117,7 +128,7 @@ export function NavUser() {
           variant="ghost"
           className="w-full justify-start"
         >
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <LogOut />
             Log out
           </DropdownMenuItem>

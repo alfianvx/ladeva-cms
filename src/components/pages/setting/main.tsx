@@ -80,15 +80,15 @@ export default function MainSetting() {
       <h1 className="text-2xl font-bold mb-6">Halaman Pengaturan</h1>
       <Tabs defaultValue="notifications" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="appearance">Appearance</TabsTrigger>
+          <TabsTrigger value="notifications">Notifikasi</TabsTrigger>
+          <TabsTrigger value="appearance">Tampilan</TabsTrigger>
         </TabsList>
         <TabsContent value="notifications">
           <Card>
             <CardHeader>
-              <CardTitle>Notifications</CardTitle>
+              <CardTitle>Notifikasi</CardTitle>
               <CardDescription>
-                Manage your notification preferences.
+                Pengaturan notifikasi untuk akun Anda.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -104,11 +104,11 @@ export default function MainSetting() {
                       <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                         <div className="space-y-0.5">
                           <FormLabel className="text-base">
-                            Marketing emails
+                            Email peringatan statistik harian
                           </FormLabel>
                           <FormDescription>
-                            Receive emails about new products, features, and
-                            more.
+                            Terima email peringatan tentang statistik harian
+                            Anda.
                           </FormDescription>
                         </div>
                         <FormControl>
@@ -127,10 +127,10 @@ export default function MainSetting() {
                       <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                         <div className="space-y-0.5">
                           <FormLabel className="text-base">
-                            Social notifications
+                            Email notifikasi kegiatan akun
                           </FormLabel>
                           <FormDescription>
-                            Receive notifications about your account activity.
+                            Terima email notifikasi tentang kegiatan akun Anda.
                           </FormDescription>
                         </div>
                         <FormControl>
@@ -149,10 +149,10 @@ export default function MainSetting() {
                       <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                         <div className="space-y-0.5">
                           <FormLabel className="text-base">
-                            Security notifications
+                            Email notifikasi keamanan akun
                           </FormLabel>
                           <FormDescription>
-                            Receive notifications about your account security.
+                            Terima email notifikasi tentang keamanan akun Anda.
                           </FormDescription>
                         </div>
                         <FormControl>
@@ -169,7 +169,7 @@ export default function MainSetting() {
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     <Save className="mr-2 h-4 w-4" />
-                    Save changes
+                    Simpan Perubahan
                   </Button>
                 </form>
               </Form>
@@ -179,10 +179,8 @@ export default function MainSetting() {
         <TabsContent value="appearance">
           <Card>
             <CardHeader>
-              <CardTitle>Appearance</CardTitle>
-              <CardDescription>
-                Customize the appearance of the application.
-              </CardDescription>
+              <CardTitle>Tampilan</CardTitle>
+              <CardDescription>Kustomisasi tampilan dashboard.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Form {...appearanceForm}>
@@ -195,7 +193,7 @@ export default function MainSetting() {
                     name="theme"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Theme</FormLabel>
+                        <FormLabel>Tema</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -206,13 +204,13 @@ export default function MainSetting() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="light">Light</SelectItem>
-                            <SelectItem value="dark">Dark</SelectItem>
-                            <SelectItem value="system">System</SelectItem>
+                            <SelectItem value="light">Cerah</SelectItem>
+                            <SelectItem value="dark">Gelap</SelectItem>
+                            <SelectItem value="system">Default</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormDescription>
-                          Select the theme for the dashboard.
+                          Pilih tema untuk dashboard.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -223,7 +221,7 @@ export default function MainSetting() {
                     name="fontSize"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Font Size</FormLabel>
+                        <FormLabel>Ukuran Font</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -234,13 +232,13 @@ export default function MainSetting() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="small">Small</SelectItem>
+                            <SelectItem value="small">Kecil</SelectItem>
                             <SelectItem value="medium">Medium</SelectItem>
-                            <SelectItem value="large">Large</SelectItem>
+                            <SelectItem value="large">Besar</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormDescription>
-                          Select the font size for the dashboard.
+                          Pilih ukuran font untuk dashboard.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -251,7 +249,7 @@ export default function MainSetting() {
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     <Save className="mr-2 h-4 w-4" />
-                    Save changes
+                    Simpan Perubahan
                   </Button>
                 </form>
               </Form>

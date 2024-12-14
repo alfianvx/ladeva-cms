@@ -4,7 +4,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { ProductFormSchema } from "@/types/validation/product.validation";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -18,20 +17,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { toast } from "sonner";
 import { CircleX, LoaderCircle, Save } from "lucide-react";
 import Image from "next/image";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/app/api/uploadthing/core";
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProduct } from "@/services/dashboard/product";
-import { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Editor, EditorRef } from "@/components/editor";
+import { TProduct } from "@/types/schema/Product";
+import { PortofolioFormSchema } from "@/types/validation/portofolio.validation";
+import { updatePortofolio } from "@/services/dashboard/portofolio";
 
-export default function CreateProductForm() {
+export default function EditPortofolioForm({ data }: { data: TProduct }) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const session = useSession();
@@ -40,40 +39,42 @@ export default function CreateProductForm() {
 
   const editorRef = React.useRef<EditorRef>(null);
 
-  const [logoPreview, setLogoPreview] = React.useState<string | null>(null);
+  const [logoPreview, setLogoPreview] = React.useState<string | null>(
+    data.logo_url
+  );
   const [thumbnailPreview, setThumbnailPreview] = React.useState<string | null>(
-    null
+    data.thumbnail_url
   );
 
-  const form = useForm<z.infer<typeof ProductFormSchema>>({
-    resolver: zodResolver(ProductFormSchema),
+  const form = useForm<z.infer<typeof PortofolioFormSchema>>({
+    resolver: zodResolver(PortofolioFormSchema),
     defaultValues: {
-      logo_url:
-        "https://utfs.io/f/YdQML4nhRlwkN90TMSCGVd7pO39Ng1cK06SyfhsAHe4BCkuJ",
-      thumbnail_url:
-        "https://utfs.io/f/YdQML4nhRlwkHwH7rKOgN0frqcjZi3Rm9xkHtJEQOhAXlM8n",
+      name: data.name,
+      short_description: data.short_description,
+      description: data.description,
+      logo_url: data.logo_url,
+      thumbnail_url: data.thumbnail_url,
     },
   });
 
   const mutation = useMutation({
-    mutationKey: ["CREATE_PRODUCT"],
-    mutationFn: (values: z.infer<typeof ProductFormSchema>) =>
-      createProduct(values, token),
+    mutationKey: ["UPDATE_PORTOFOLIO", data.id],
+    mutationFn: (values: z.infer<typeof PortofolioFormSchema>) =>
+      updatePortofolio(data.id, values, token),
     onSuccess: () => {
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["GET_PRODUCTS"] });
-      router.push("/dashboard/product");
+      router.push("/dashboard/portofolio");
+      queryClient.invalidateQueries({ queryKey: ["GET_PORTOFOLIOS"] });
+      queryClient.invalidateQueries({
+        queryKey: ["GET_SINGLE_PORTOFOLIO_BY_ID", data.id],
+      });
     },
     onError: (error) => {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
+      console.error("Submission error:", error);
     },
   });
 
-  function onSubmit(values: z.infer<typeof ProductFormSchema>) {
+  function onSubmit(values: z.infer<typeof PortofolioFormSchema>) {
     mutation.mutate(values);
   }
 
@@ -111,16 +112,19 @@ export default function CreateProductForm() {
               setLogoPreview(file[0].appUrl);
             }}
           />
-          {logoPreview && (
+          {form.getValues("logo_url") !== "" && logoPreview !== null ? (
             <div className="relative">
-              <Image
-                src={logoPreview}
-                priority
-                alt="avatar"
-                width={100}
-                height={100}
-                className="h-full w-32 object-cover rounded-lg"
-              />
+              <div className="w-56 h-24 flex justify-center">
+                <Image
+                  className="object-contain"
+                  src={form.getValues("logo_url") ?? logoPreview}
+                  alt="logo"
+                  priority
+                  layout="responsive"
+                  width={100}
+                  height={100}
+                />
+              </div>
               <Button
                 size="icon"
                 className="rounded-full absolute -top-3 -right-3 p-1"
@@ -129,7 +133,7 @@ export default function CreateProductForm() {
                 <CircleX size={10} />
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
       <div className="grid grid-cols-3 mb-4">
@@ -150,16 +154,20 @@ export default function CreateProductForm() {
               setThumbnailPreview(file[0].appUrl);
             }}
           />
-          {thumbnailPreview && (
+          {form.getValues("thumbnail_url") !== "" &&
+          thumbnailPreview !== null ? (
             <div className="relative">
-              <Image
-                src={thumbnailPreview}
-                priority
-                alt="avatar"
-                width={100}
-                height={100}
-                className="h-full w-32 object-cover rounded-lg"
-              />
+              <div className="w-56 h-24 flex justify-center">
+                <Image
+                  className="object-contain"
+                  src={form.getValues("thumbnail_url") ?? thumbnailPreview}
+                  alt="logo"
+                  priority
+                  layout="responsive"
+                  width={100}
+                  height={100}
+                />
+              </div>
               <Button
                 size="icon"
                 className="rounded-full absolute -top-3 -right-3 p-1"
@@ -168,7 +176,7 @@ export default function CreateProductForm() {
                 <CircleX size={10} />
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
       <Form {...form}>
@@ -179,7 +187,7 @@ export default function CreateProductForm() {
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 space-y-0">
                 <FormLabel className="col-span-1 text-base">
-                  Nama Produk
+                  Nama Portofolio
                 </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
@@ -216,6 +224,7 @@ export default function CreateProductForm() {
             ref={editorRef}
             toolBarClassName="w-full z-10"
             footerClassName="w-full z-10"
+            content={data.description}
             editorProps={{
               attributes: {
                 class:
@@ -231,7 +240,7 @@ export default function CreateProductForm() {
       </div>
       <div className="flex items-center justify-end gap-3 mt-4">
         <Button variant="destructive" asChild>
-          <Link href="/dashboard/product">
+          <Link href="/dashboard/portofolio">
             <CircleX /> Batal
           </Link>
         </Button>

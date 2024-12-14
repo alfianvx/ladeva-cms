@@ -145,7 +145,7 @@ export default function PricingContent() {
             {item.offer.map((offer, index) => (
               <div
                 key={index}
-                className="bg-gray-100 text-stone-900 px-2 py-1 rounded-md"
+                className="bg-gray-100 text-sm text-stone-900 px-2 py-1 rounded-md"
               >
                 <p className="text-sm">{offer}</p>
               </div>

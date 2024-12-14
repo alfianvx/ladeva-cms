@@ -1,11 +1,11 @@
 import Loading from "@/app/loading";
-import MainPortofolio from "@/components/pages/portofolio/main-portofolio";
+import CreatePortofolioForm from "@/components/layouts/portofolio/create-form";
 import { Suspense } from "react";
 
 export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
-      <MainPortofolio />
+      <CreatePortofolioForm />
     </Suspense>
   );
 }

@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeClosed, Loader2 } from "lucide-react";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,7 @@ import { signInFormSchema } from "@/app/types/validation/form";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof signInFormSchema>>({
@@ -46,12 +47,12 @@ export default function Login() {
       });
 
       if (response?.error) {
-        toast.error("Invalid email or password");
+        toast.error("Email atau password tidak valid");
         return;
       }
 
       if (response?.ok) {
-        toast.success("Login successful! Redirecting...");
+        toast.success("Login Berhasil!");
         setTimeout(() => {
           router.push("/dashboard"); // Adjust this to your desired redirect path
           router.refresh();
@@ -70,12 +71,10 @@ export default function Login() {
     <div className="h-screen flex-col w-full dark:bg-black bg-white dark:bg-grid-white/5 bg-grid-black/5 relative flex items-center justify-center">
       {/* Radial gradient for the container to give a faded look */}
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-      <Card className=" z-50">
+      <Card className="max-w-sm w-full z-50">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Log in to your account to access your dashboard.
-          </CardDescription>
+          <CardDescription>Log in untuk mengakses dashboard.</CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -90,7 +89,7 @@ export default function Login() {
                       <FormControl>
                         <Input
                           type="email"
-                          autoComplete="email"
+                          autoComplete="off"
                           disabled={isLoading}
                           {...field}
                         />
@@ -107,13 +106,23 @@ export default function Login() {
                   <FormItem>
                     <div className="grid gap-2">
                       <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          autoComplete="current-password"
-                          disabled={isLoading}
-                          {...field}
-                        />
+                      <FormControl className="relative">
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            autoComplete="current-password"
+                            disabled={isLoading}
+                            {...field}
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            className="absolute right-0 top-0 h-full px-3"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? <Eye /> : <EyeClosed />}
+                          </Button>
+                        </div>
                       </FormControl>
                     </div>
                     <FormMessage />

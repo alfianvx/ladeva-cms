@@ -4,7 +4,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { ProductFormSchema } from "@/types/validation/product.validation";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -25,13 +24,14 @@ import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/app/api/uploadthing/core";
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProduct } from "@/services/dashboard/product";
 import { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Editor, EditorRef } from "@/components/editor";
+import { PortofolioFormSchema } from "@/types/validation/portofolio.validation";
+import { createPortofolio } from "@/services/dashboard/portofolio";
 
-export default function CreateProductForm() {
+export default function CreatePortofolioForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const session = useSession();
@@ -45,8 +45,8 @@ export default function CreateProductForm() {
     null
   );
 
-  const form = useForm<z.infer<typeof ProductFormSchema>>({
-    resolver: zodResolver(ProductFormSchema),
+  const form = useForm<z.infer<typeof PortofolioFormSchema>>({
+    resolver: zodResolver(PortofolioFormSchema),
     defaultValues: {
       logo_url:
         "https://utfs.io/f/YdQML4nhRlwkN90TMSCGVd7pO39Ng1cK06SyfhsAHe4BCkuJ",
@@ -56,13 +56,13 @@ export default function CreateProductForm() {
   });
 
   const mutation = useMutation({
-    mutationKey: ["CREATE_PRODUCT"],
-    mutationFn: (values: z.infer<typeof ProductFormSchema>) =>
-      createProduct(values, token),
+    mutationKey: ["CREATE_PORTOFOLIO"],
+    mutationFn: (values: z.infer<typeof PortofolioFormSchema>) =>
+      createPortofolio(values, token),
     onSuccess: () => {
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["GET_PRODUCTS"] });
-      router.push("/dashboard/product");
+      queryClient.invalidateQueries({ queryKey: ["GET_PORTOFOLIOS"] });
+      router.push("/dashboard/portofolio");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
@@ -73,7 +73,7 @@ export default function CreateProductForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof ProductFormSchema>) {
+  function onSubmit(values: z.infer<typeof PortofolioFormSchema>) {
     mutation.mutate(values);
   }
 
@@ -179,7 +179,7 @@ export default function CreateProductForm() {
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 space-y-0">
                 <FormLabel className="col-span-1 text-base">
-                  Nama Produk
+                  Nama Portofolio
                 </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
@@ -231,7 +231,7 @@ export default function CreateProductForm() {
       </div>
       <div className="flex items-center justify-end gap-3 mt-4">
         <Button variant="destructive" asChild>
-          <Link href="/dashboard/product">
+          <Link href="/dashboard/portofolio">
             <CircleX /> Batal
           </Link>
         </Button>
