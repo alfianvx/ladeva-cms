@@ -5,13 +5,13 @@ export const getProducts = async () => {
   return await http.get("/product").then((response) => response.data);
 };
 
-export const getProductById = async (id: string, token: string | undefined) => {
+export const getProductById = async (id: string) => {
+  return await http.get(`/product/${id}`).then((response) => response.data);
+};
+
+export const getProductBySlug = async (slug: string) => {
   return await http
-    .get(`/product/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    .get(`/product/slug/${slug}`)
     .then((response) => response.data);
 };
 

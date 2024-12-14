@@ -30,11 +30,17 @@ import { deleteProduct } from "@/services/dashboard/product";
 import { TProduct } from "@/types/schema/Product";
 import { Avatar } from "@radix-ui/react-avatar";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Calendar, Ellipsis, LoaderCircle, Pencil, Trash2 } from "lucide-react";
+import {
+  Calendar,
+  Ellipsis,
+  Eye,
+  LoaderCircle,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { convertDate } from "@/utils/dateConverter";
-
 const ProductCard = ({ product }: { product: TProduct }) => {
   const queryClient = useQueryClient();
   const session = useSession();
@@ -71,7 +77,14 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           <DropdownMenuContent align="start">
             <DropdownMenuGroup className="space-y-1">
               <DropdownMenuItem asChild className="cursor-pointer">
-                <Button asChild variant="secondary">
+                <Button asChild variant="secondary" className="w-full">
+                  <Link href={`/dashboard/product/detail/${product.slug}`}>
+                    <Eye /> Lihat
+                  </Link>
+                </Button>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Button asChild variant="secondary" className="w-full">
                   <Link href={`/dashboard/product/edit/${product.id}`}>
                     <Pencil /> Edit
                   </Link>
@@ -119,7 +132,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           {product.short_description}
         </CardDescription>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="justify-end">
         <Badge color="primary" className="mt-2 rounded-full">
           <Calendar size={12} className="mr-2" />
           {convertDate(product.createdAt)}

@@ -1,6 +1,7 @@
 export type TProduct = {
   id: string;
   name: string;
+  slug: string;
   short_description: string;
   description: string;
   logo_url: string;

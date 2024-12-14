@@ -214,11 +214,12 @@ export default function CreateProductForm() {
         <div className="border rounded-lg col-span-2">
           <Editor
             ref={editorRef}
-            toolBarClassName="w-full"
+            toolBarClassName="w-full z-10"
+            footerClassName="w-full z-10"
             editorProps={{
               attributes: {
                 class:
-                  "py-6 px-8 prose prose-base prose-blue prose-headings:scroll-mt-[80px] dark:prose-invert",
+                  "py-6 px-4 prose prose-base prose-blue prose-headings:scroll-mt-[80px] dark:prose-invert",
               },
             }}
             onUpdate={({ editor }) => {
