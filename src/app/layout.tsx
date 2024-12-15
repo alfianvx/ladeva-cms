@@ -15,6 +15,17 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Ladeva CMS Dashboard",
+  description: "a content management system for ladeva",
+  openGraph: {
+    images: [
+      {
+        url: "https://utfs.io/f/YdQML4nhRlwkciu9a0mw2vOl51SWnoepA8RxtfuasYjrd63K",
+        width: 1738,
+        height: 974,
+        alt: "Ladeva CMS Dashboard",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
