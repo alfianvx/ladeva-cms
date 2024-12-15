@@ -6,10 +6,10 @@ export default function MainClient() {
   return (
     <React.Fragment>
       <Header
-        title="Halaman Client"
+        title="Halaman Daftar Partner"
         isCreateMode={false}
         url_to="/dashboard/client/create"
-        button_title="Tambah Client"
+        button_title="Tambah Partner"
       />
       <ClientContent />
     </React.Fragment>

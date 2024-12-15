@@ -58,7 +58,7 @@ export default function MemberList() {
                 {convertDate(item.createdAt)}
               </TableCell>
               <TableCell className="text-right">
-                <Badge>{item.role}</Badge>
+                <Badge className="rounded-full">{item.role}</Badge>
               </TableCell>
             </TableRow>
           ))}

@@ -27,7 +27,7 @@ function Providers({
         disableTransitionOnChange
       >
         {children}
-        <Toaster position="top-right" />
+        <Toaster position="top-right" duration={2500} />
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

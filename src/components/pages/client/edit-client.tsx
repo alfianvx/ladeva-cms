@@ -23,7 +23,7 @@ export default function EditClient({ id }: { id: string }) {
 
   return (
     <React.Fragment>
-      <Header title="Edit Client" isCreateMode={true} />
+      <Header title="Edit Partner" isCreateMode={true} />
       <EditClientForm data={data?.data} />
     </React.Fragment>
   );

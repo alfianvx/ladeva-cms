@@ -23,7 +23,7 @@ export default function EditPricing({ id }: { id: string }) {
 
   return (
     <React.Fragment>
-      <Header title="Edit Penwaran" isCreateMode={true} />
+      <Header title="Edit Penawaran" isCreateMode={true} />
       <EditPricingForm data={data?.data} />
     </React.Fragment>
   );

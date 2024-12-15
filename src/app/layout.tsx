@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ladeva Admin CMS",
+  title: "Ladeva CMS Dashboard",
 };
 
 export default function RootLayout({

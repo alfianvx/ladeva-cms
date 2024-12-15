@@ -23,7 +23,7 @@ export default function EditWorkflow({ id }: { id: string }) {
 
   return (
     <React.Fragment>
-      <Header title="Edit Service" isCreateMode={true} />
+      <Header title="Edit Alur Kerja" isCreateMode={true} />
       <EditWorkflowForm data={data?.data} />
     </React.Fragment>
   );

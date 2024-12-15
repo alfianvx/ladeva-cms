@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { CircleX, LoaderCircle, Save } from "lucide-react";
+import { CircleX, LoaderCircle, Save, Trash2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { PricingFormSchema } from "@/types/validation/pricing.validation";
 import { TPricing } from "@/types/schema/Pricing";
@@ -85,7 +85,9 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
             name="title"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3">
-                <FormLabel className="col-span-1 text-base">Title</FormLabel>
+                <FormLabel className="col-span-1 text-base">
+                  Nama Tawaran
+                </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
                     <Input {...field} />
@@ -101,7 +103,7 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
             render={({ field }) => (
               <FormItem className="grid grid-cols-3">
                 <FormLabel className="col-span-1 text-base">
-                  Deskripsi Layanan
+                  Deskripsi Tawaran
                 </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
@@ -115,7 +117,7 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
           <div className="space-y-4">
             <div className="grid grid-cols-3">
               <FormLabel className="col-span-1 text-base">
-                Layanan Ditawarkan
+                Item Tawaran
               </FormLabel>
               <div className="col-span-2 space-y-2">
                 {form.getValues("offer").map((input, index) => (
@@ -124,6 +126,15 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
                       value={input}
                       onChange={(e) => handleInputChange(index, e.target.value)}
                     />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => {
+                        setInputs((prev) => prev.filter((_, i) => i !== index));
+                      }}
+                    >
+                      <Trash2 />
+                    </Button>
                   </div>
                 ))}
                 <Button

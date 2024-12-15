@@ -82,7 +82,9 @@ export default function PricingContent() {
         <Card className="p-0" key={item.id}>
           <CardHeader className="flex flex-row items-center justify-between">
             <div className="flex items-center">
-              <CardTitle className="text-xl">{item.title}</CardTitle>
+              <CardTitle>
+                <h1 className="text-2xl">{item.title}</h1>
+              </CardTitle>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="p-0">
@@ -137,17 +139,17 @@ export default function PricingContent() {
             </DropdownMenu>
           </CardHeader>
           <CardContent>
-            <CardDescription className="text-md">
-              {item.description}
+            <CardDescription>
+              <p className="text-md">{item.description}</p>
             </CardDescription>
           </CardContent>
-          <CardFooter className="flex flex-col items-start gap-2">
+          <CardFooter className="flex flex-wrap items-start gap-2">
             {item.offer.map((offer, index) => (
               <div
                 key={index}
-                className="bg-gray-100 text-sm text-stone-900 px-2 py-1 rounded-md"
+                className="bg-gray-100 text-xs text-stone-900 px-2 py-1 rounded-md"
               >
-                <p className="text-sm">{offer}</p>
+                <span className="text-sm">{offer}</span>
               </div>
             ))}
           </CardFooter>

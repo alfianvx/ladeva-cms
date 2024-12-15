@@ -103,9 +103,10 @@ export default function EditPortofolioForm({ data }: { data: TProduct }) {
           <UploadButton<OurFileRouter, any>
             endpoint="imageUploader"
             appearance={{
-              container: "w-32 h-32 border border-dashed p-2 rounded-lg",
+              container:
+                "w-32 h-32 border border-dashed dark:border-gray-400 border-zinc-800 p-2 rounded-lg",
               button:
-                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-300 border-zinc-800 ",
+                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-400 border-zinc-800",
             }}
             onClientUploadComplete={(file) => {
               form.setValue("logo_url", file[0].appUrl);
@@ -127,7 +128,7 @@ export default function EditPortofolioForm({ data }: { data: TProduct }) {
               </div>
               <Button
                 size="icon"
-                className="rounded-full absolute -top-3 -right-3 p-1"
+                className="rounded-full absolute -top-6 -right-6 p-1"
                 onClick={deleteLogo}
               >
                 <CircleX size={10} />
@@ -145,9 +146,10 @@ export default function EditPortofolioForm({ data }: { data: TProduct }) {
           <UploadButton<OurFileRouter, any>
             endpoint="imageUploader"
             appearance={{
-              container: "w-32 h-32 border border-dashed p-2 rounded-lg",
+              container:
+                "w-32 h-32 border border-dashed dark:border-gray-400 border-zinc-800 p-2 rounded-lg",
               button:
-                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-300 border-zinc-800 ",
+                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-400 border-zinc-800",
             }}
             onClientUploadComplete={(file) => {
               form.setValue("thumbnail_url", file[0].appUrl);
@@ -170,7 +172,7 @@ export default function EditPortofolioForm({ data }: { data: TProduct }) {
               </div>
               <Button
                 size="icon"
-                className="rounded-full absolute -top-3 -right-3 p-1"
+                className="rounded-full absolute -top-6 -right-6 p-1"
                 onClick={deleteThumbnail}
               >
                 <CircleX size={10} />

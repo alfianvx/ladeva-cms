@@ -85,7 +85,9 @@ export default function CreatePricingForm() {
             name="title"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3">
-                <FormLabel className="col-span-1 text-base">Title</FormLabel>
+                <FormLabel className="col-span-1 text-base">
+                  Nama Tawaran
+                </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
                     <Input {...field} />
@@ -101,7 +103,7 @@ export default function CreatePricingForm() {
             render={({ field }) => (
               <FormItem className="grid grid-cols-3">
                 <FormLabel className="col-span-1 text-base">
-                  Deskripsi Layanan
+                  Deskripsi Tawaran
                 </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
@@ -115,7 +117,7 @@ export default function CreatePricingForm() {
           <div className="space-y-4">
             <div className="grid grid-cols-3">
               <FormLabel className="col-span-1 text-base">
-                Layanan Ditawarkan
+                Item Tawaran
               </FormLabel>
               <div className="col-span-2 space-y-2">
                 {inputs.map((input, index) => (
@@ -139,7 +141,7 @@ export default function CreatePricingForm() {
           </div>
           <div className="flex items-center justify-end gap-3 mt-4">
             <Button variant="destructive" asChild>
-              <Link href="/dashboard/workflow">
+              <Link href="/dashboard/pricing">
                 <CircleX /> Batal
               </Link>
             </Button>

@@ -14,7 +14,7 @@ import { NavUser } from "@/components/layouts/sidebar/nav-user";
 import { ThemeSwithcer } from "@/components/theme-switcher";
 
 export const metadata: Metadata = {
-  title: "Ladeva Admin CMS | Dashboard",
+  title: "Dashboard | Ladeva CMS",
 };
 
 export default async function DashboardLayout({

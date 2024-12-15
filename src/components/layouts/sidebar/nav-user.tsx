@@ -95,7 +95,7 @@ export function NavUser() {
               ) : (
                 <MoonStar />
               )}
-              Switch Theme
+              Ubah Tema
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>

@@ -5,7 +5,7 @@ import React from "react";
 export default function CreateTestimonial() {
   return (
     <React.Fragment>
-      <Header title="Tambah Testimonial Baru" isCreateMode={true} />
+      <Header title="Tambah Testimoni Baru" isCreateMode={true} />
       <CreateTestimonialForm />
     </React.Fragment>
   );

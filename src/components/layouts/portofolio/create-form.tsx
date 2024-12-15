@@ -102,9 +102,10 @@ export default function CreatePortofolioForm() {
           <UploadButton<OurFileRouter, any>
             endpoint="imageUploader"
             appearance={{
-              container: "w-32 h-32 border border-dashed p-2 rounded-lg",
+              container:
+                "w-32 h-32 border border-dashed dark:border-gray-400 border-zinc-800 p-2 rounded-lg",
               button:
-                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-300 border-zinc-800 ",
+                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-400 border-zinc-800",
             }}
             onClientUploadComplete={(file) => {
               form.setValue("logo_url", file[0].appUrl);
@@ -112,18 +113,18 @@ export default function CreatePortofolioForm() {
             }}
           />
           {logoPreview && (
-            <div className="relative">
+            <div className="relative max-w-max">
               <Image
                 src={logoPreview}
                 priority
                 alt="avatar"
                 width={100}
                 height={100}
-                className="h-full w-32 object-cover rounded-lg"
+                className="h-full w-32 object-cover"
               />
               <Button
                 size="icon"
-                className="rounded-full absolute -top-3 -right-3 p-1"
+                className="rounded-full absolute -top-10 -right-10 p-1"
                 onClick={deleteLogo}
               >
                 <CircleX size={10} />
@@ -141,9 +142,10 @@ export default function CreatePortofolioForm() {
           <UploadButton<OurFileRouter, any>
             endpoint="imageUploader"
             appearance={{
-              container: "w-32 h-32 border border-dashed p-2 rounded-lg",
+              container:
+                "w-32 h-32 border border-dashed dark:border-gray-400 border-zinc-800 p-2 rounded-lg",
               button:
-                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-300 border-zinc-800 ",
+                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-400 border-zinc-800",
             }}
             onClientUploadComplete={(file) => {
               form.setValue("thumbnail_url", file[0].appUrl);
@@ -151,18 +153,19 @@ export default function CreatePortofolioForm() {
             }}
           />
           {thumbnailPreview && (
-            <div className="relative">
+            <div className="relative max-w-max">
               <Image
                 src={thumbnailPreview}
                 priority
+                quality={100}
                 alt="avatar"
                 width={100}
                 height={100}
-                className="h-full w-32 object-cover rounded-lg"
+                className="w-56 h-full object-cover"
               />
               <Button
                 size="icon"
-                className="rounded-full absolute -top-3 -right-3 p-1"
+                className="rounded-full absolute -top-10 -right-10 p-1"
                 onClick={deleteThumbnail}
               >
                 <CircleX size={10} />

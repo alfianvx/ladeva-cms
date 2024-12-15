@@ -123,7 +123,7 @@ export default function EditWorkflowForm({ data }: { data: TService }) {
             name="title"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3">
-                <FormLabel className="col-span-1 text-base">Title</FormLabel>
+                <FormLabel className="col-span-1 text-base">Judul</FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
                     <Input {...field} />
@@ -139,7 +139,7 @@ export default function EditWorkflowForm({ data }: { data: TService }) {
             render={({ field }) => (
               <FormItem className="grid grid-cols-3">
                 <FormLabel className="col-span-1 text-base">
-                  Deskripsi Layanan
+                  Deskripsi
                 </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
@@ -152,7 +152,7 @@ export default function EditWorkflowForm({ data }: { data: TService }) {
           />
           <div className="flex items-center justify-end gap-3 mt-4">
             <Button variant="destructive" asChild>
-              <Link href="/dashboard/workdflow">
+              <Link href="/dashboard/workflow">
                 <CircleX /> Batal
               </Link>
             </Button>

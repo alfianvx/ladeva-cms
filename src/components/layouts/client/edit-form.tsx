@@ -73,16 +73,17 @@ export default function EditClientForm({ data }: { data: TClient }) {
     <section className="p-4">
       <div className="grid grid-cols-3 mb-4">
         <div className="col-span-1 items-center">
-          <label className="text-base">Upload Logo</label>
+          <label className="text-base">Logo</label>
           <span className="text-xs ml-3">( opsional )</span>
         </div>
         <div className="col-span-2 flex items-center gap-3">
           <UploadButton<OurFileRouter, any>
             endpoint="imageUploader"
             appearance={{
-              container: "w-32 h-32 border border-dashed p-2 rounded-lg",
+              container:
+                "w-32 h-32 border border-dashed dark:border-gray-400 border-zinc-800 p-2 rounded-lg",
               button:
-                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-300 border-zinc-800 ",
+                "w-full h-full border border-dashed rounded-lg bg-zinc-800 dark:border-gray-400 border-zinc-800",
             }}
             onClientUploadComplete={(file) => {
               form.setValue("logo_url", file[0].appUrl);
