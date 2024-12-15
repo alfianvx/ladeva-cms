@@ -11,3 +11,10 @@ export type TUserForm = {
   email?: string;
   avatar?: string;
 };
+
+export type TUserRegistForm = {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+};

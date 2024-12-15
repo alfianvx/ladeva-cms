@@ -46,8 +46,8 @@ export function NavItem({
                 className={cn(
                   buttonVariants({ variant: "ghost" }),
                   pathname === item.url
-                    ? "dark:bg-neutral-800  bg-neutral-900 text-white hover:bg-muted hover:text-white hover:bg-neutral-800"
-                    : "dark:hover:bg-neutral-800 hover:bg-neutral-900 dark:text-white hover:text-white text-neutral-950",
+                    ? "dark:bg-neutral-800 active:bg-neutral-900 active:text-white bg-neutral-900 text-white hover:bg-muted hover:text-white hover:bg-neutral-800"
+                    : "dark:hover:bg-neutral-800 active:bg-neutral-900 active:text-white hover:bg-neutral-900 dark:text-white hover:text-white text-neutral-950",
                   "justify-start w-full"
                 )}
               >

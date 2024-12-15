@@ -31,7 +31,7 @@ export default function MemberList() {
     return <Loading />;
   }
 
-  if (data.data.length === 0)
+  if (data?.data.length === 0)
     return (
       <div className="flex flex-col gap-4 justify-center items-center my-56 px-4">
         <span>Belum Ada Member</span>
