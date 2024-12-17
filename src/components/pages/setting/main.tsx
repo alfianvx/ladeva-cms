@@ -32,6 +32,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 const notificationFormSchema = z.object({
   marketingEmails: z.boolean().default(false),
@@ -68,8 +69,8 @@ export default function MainSetting() {
     values: z.infer<typeof notificationFormSchema | typeof appearanceFormSchema>
   ) {
     setIsSaving(true);
-    // Simulate API call
     setTimeout(() => {
+      toast.success("Perubahan berhasil disimpan.");
       console.log(values);
       setIsSaving(false);
     }, 1000);

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -29,6 +30,7 @@ import { AxiosError } from "axios";
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/app/api/uploadthing/core";
 import Image from "next/image";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function CreateTestimonialForm() {
   const queryClient = useQueryClient();
@@ -159,6 +161,32 @@ export default function CreateTestimonialForm() {
                 <div className="col-span-2 space-y-2">
                   <FormControl>
                     <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="is_featured"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3">
+                <FormLabel className="col-span-1 text-base">
+                  Testimoni Highlight
+                </FormLabel>
+                <div className="col-span-2 space-y-2">
+                  <FormControl>
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <FormDescription>
+                        Ceklist jika testimonial ini akan di jadiakan
+                        heightlight
+                      </FormDescription>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </div>

@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -27,14 +28,8 @@ import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from "@/app/api/uploadthing/core";
 import Image from "next/image";
 import React from "react";
-
-type TTestimonial = {
-  id: string;
-  name: string;
-  profession: string;
-  message: string;
-  avatar_url: string;
-};
+import { Checkbox } from "@/components/ui/checkbox";
+import { TTestimonial } from "@/types/schema/Testimonial";
 
 export default function EditTestimonialForm({ data }: { data: TTestimonial }) {
   const router = useRouter();
@@ -53,6 +48,7 @@ export default function EditTestimonialForm({ data }: { data: TTestimonial }) {
       profession: data.profession,
       message: data.message,
       avatar_url: data.avatar_url,
+      is_featured: data.is_featured,
     },
   });
 
@@ -164,6 +160,32 @@ export default function EditTestimonialForm({ data }: { data: TTestimonial }) {
                 <div className="col-span-2 space-y-2">
                   <FormControl>
                     <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="is_featured"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3">
+                <FormLabel className="col-span-1 text-base">
+                  Tawaran Unggulan
+                </FormLabel>
+                <div className="col-span-2 space-y-2">
+                  <FormControl>
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <FormDescription>
+                        Tandai jika tawaran ini ingin ditampilkan di bagian
+                        unggulan.
+                      </FormDescription>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </div>

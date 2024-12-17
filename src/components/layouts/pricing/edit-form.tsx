@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,6 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { PricingFormSchema } from "@/types/validation/pricing.validation";
 import { TPricing } from "@/types/schema/Pricing";
 import { updatePricingContent } from "@/services/dashboard/pricing";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function EditPricingForm({ data }: { data: TPricing }) {
   const router = useRouter();
@@ -38,6 +40,7 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
       title: data.title,
       description: data.description,
       offer: data.offer,
+      is_featured: data.is_featured,
     },
   });
 
@@ -63,7 +66,7 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
       form.reset();
       router.push("/dashboard/pricing");
       query.invalidateQueries({ queryKey: ["GET_PRICINGS"] });
-      query.invalidateQueries({ queryKey: ["GET_SINGLE_PRICING"] });
+      query.invalidateQueries({ queryKey: ["GET_SINGLE_PRICING", data.id] });
     },
     onError: (error) => {
       console.error("Submission error:", error);
@@ -107,7 +110,7 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
                 </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
-                    <Textarea {...field} />
+                    <Textarea rows={3} {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -148,6 +151,32 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
               </div>
             </div>
           </div>
+          <FormField
+            control={form.control}
+            name="is_featured"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3">
+                <FormLabel className="col-span-1 text-base">
+                  Tawaran Unggulan
+                </FormLabel>
+                <div className="col-span-2 space-y-2">
+                  <FormControl>
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <FormDescription>
+                        Tandai jika tawaran ini ingin ditampilkan di bagian
+                        unggulan.
+                      </FormDescription>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
           <div className="flex items-center justify-end gap-3 mt-4">
             <Button variant="destructive" asChild>
               <Link href="/dashboard/pricing">

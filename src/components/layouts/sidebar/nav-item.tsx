@@ -45,7 +45,7 @@ export function NavItem({
                 tooltip={item.name}
                 className={cn(
                   buttonVariants({ variant: "ghost" }),
-                  pathname === item.url
+                  pathname.startsWith(item.url)
                     ? "dark:bg-neutral-800 active:bg-neutral-900 active:text-white bg-neutral-900 text-white hover:bg-muted hover:text-white hover:bg-neutral-800"
                     : "dark:hover:bg-neutral-800 active:bg-neutral-900 active:text-white hover:bg-neutral-900 dark:text-white hover:text-white text-neutral-950",
                   "justify-start w-full"

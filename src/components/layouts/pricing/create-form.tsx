@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,6 +27,7 @@ import { AxiosError } from "axios";
 import { Textarea } from "@/components/ui/textarea";
 import { PricingFormSchema } from "@/types/validation/pricing.validation";
 import { createPricingContent } from "@/services/dashboard/pricing";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function CreatePricingForm() {
   const queryClient = useQueryClient();
@@ -107,7 +109,7 @@ export default function CreatePricingForm() {
                 </FormLabel>
                 <div className="col-span-2 space-y-2">
                   <FormControl>
-                    <Textarea {...field} />
+                    <Textarea rows={3} {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -139,6 +141,32 @@ export default function CreatePricingForm() {
               </div>
             </div>
           </div>
+          <FormField
+            control={form.control}
+            name="is_featured"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3">
+                <FormLabel className="col-span-1 text-base">
+                  Tawaran Unggulan
+                </FormLabel>
+                <div className="col-span-2 space-y-2">
+                  <FormControl>
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <FormDescription>
+                        Tandai jika tawaran ini ingin ditampilkan di bagian
+                        unggulan.
+                      </FormDescription>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
           <div className="flex items-center justify-end gap-3 mt-4">
             <Button variant="destructive" asChild>
               <Link href="/dashboard/pricing">
