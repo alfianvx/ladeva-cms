@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "https://utfs.io/f/YdQML4nhRlwkciu9a0mw2vOl51SWnoepA8RxtfuasYjrd63K",
+        url: "https://utfs.io/f/YdQML4nhRlwktnBUdHDyQVGwnz3Bmv7p5TeZ1YuAHXDE4qC2",
         width: 1738,
         height: 974,
         alt: "Ladeva CMS Dashboard",
