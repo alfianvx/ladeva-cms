@@ -27,6 +27,7 @@ import React from "react";
 import { TClient } from "@/types/schema/Client";
 import { ClientFormSchema } from "@/types/validation/client.validation";
 import { updateClient } from "@/services/dashboard/client";
+import { toast } from "sonner";
 
 export default function EditClientForm({ data }: { data: TClient }) {
   const router = useRouter();
@@ -52,11 +53,13 @@ export default function EditClientForm({ data }: { data: TClient }) {
       updateClient(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit partner!");
       router.push("/dashboard/client");
       query.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
     },
     onError: (error) => {
       console.error("Submission error:", error);
+      toast.error("Terjadi kesalahan saat mengedit partner : " + error.message);
     },
   });
 

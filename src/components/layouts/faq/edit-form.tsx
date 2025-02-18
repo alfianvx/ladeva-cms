@@ -22,6 +22,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateFaqContent } from "@/services/dashboard/faq";
 import { useSession } from "next-auth/react";
 import { CircleX, LoaderCircle, Save } from "lucide-react";
+import { toast } from "sonner";
 
 type TFaq = {
   answer: string;
@@ -49,11 +50,13 @@ export default function EditFaqForm({ data }: { data: TFaq }) {
       updateFaqContent(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit faq!");
       router.push("/dashboard/faq");
       query.invalidateQueries({ queryKey: ["GET_SINGLE_FAQ"] });
     },
     onError: (error) => {
       console.error("Submission error:", error);
+      toast.error("Terjadi kesalahan saat mengedit faq : " + error.message);
     },
   });
 

@@ -25,7 +25,7 @@ export default function ProductContent() {
     return (
       <div className="flex flex-col gap-4 justify-center items-center my-56 px-4">
         <span>Belum ada Produk</span>
-        <Button asChild>
+        <Button asChild className="text-xs">
           <Link href="/dashboard/product/create">
             <Plus /> Tambah Produk Baru
           </Link>
@@ -34,7 +34,7 @@ export default function ProductContent() {
     );
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
+    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-1">
       {data.data.map((item: TProduct) => (
         <ProductCard key={item.id} product={item} />
       ))}

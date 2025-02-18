@@ -21,6 +21,7 @@ import Loading from "@/app/loading";
 import { deleteClient, getClients } from "@/services/dashboard/client";
 import { TClient } from "@/types/schema/Client";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function ClientMain() {
   const queryClient = useQueryClient();
@@ -36,7 +37,13 @@ export default function ClientMain() {
     mutationKey: ["DELETE_CLIENT"],
     mutationFn: (id: string) => deleteClient(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus partner!");
       queryClient.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
+    },
+    onError: (error) => {
+      toast.error(
+        "Terjadi kesalahan saat menghapus partner : " + error.message
+      );
     },
   });
 
@@ -61,11 +68,11 @@ export default function ClientMain() {
     );
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
+    <section className="grid grid-cols-1 md:grid-cols-4 gap-4 px-4 py-1">
       {data.data.map((item: TClient) => (
         <Card key={item.id}>
           <CardContent className="flex flex-col gap-5 justify-center items-center mt-[24px]">
-            <div className="w-56 h-24 flex justify-center">
+            <div className="w-52 h-24 flex justify-center">
               <Image
                 className="object-contain"
                 src={item.logo_url}
@@ -81,14 +88,14 @@ export default function ClientMain() {
             </div>
           </CardContent>
           <CardFooter className="flex gap-3 items-center justify-center">
-            <Button asChild>
+            <Button asChild size="sm">
               <Link href={`/dashboard/client/edit/${item.id}`}>
                 <Pencil /> Edit
               </Link>
             </Button>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive">
+                <Button variant="destructive" size="sm">
                   <Trash2 /> Hapus
                 </Button>
               </AlertDialogTrigger>

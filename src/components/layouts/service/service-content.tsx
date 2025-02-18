@@ -37,6 +37,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 export default function ServiceContent() {
   const queryClient = useQueryClient();
@@ -52,6 +53,7 @@ export default function ServiceContent() {
     mutationKey: ["DELETE_SERVICE"],
     mutationFn: (id: string) => deleteServiceContent(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus layanan!");
       queryClient.invalidateQueries({ queryKey: ["GET_SERVICES"] });
     },
   });
@@ -77,10 +79,10 @@ export default function ServiceContent() {
     );
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-1">
       {data.data.map((item: TService) => (
         <Card className="p-0" key={item.id}>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <div className="flex items-center">
               <Avatar className="mr-4 size-8">
                 <AvatarImage src={item.icon_url} alt={item.title} />

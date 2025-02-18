@@ -53,12 +53,16 @@ export default function CreateWorkflowForm() {
       createWorkflowContent(values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil menambahkan alur kerja!");
       queryClient.invalidateQueries({ queryKey: ["GET_WORKFLOWS"] });
       router.push("/dashboard/workflow");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
+        toast.error(
+          "Terjadi kesalahan saat menambahkan alur kerja : " +
+            error.response?.data.message
+        );
       } else {
         toast.error("An unexpected error occurred.");
       }

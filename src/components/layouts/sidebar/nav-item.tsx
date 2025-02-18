@@ -51,7 +51,9 @@ export function NavItem({
                   "justify-start w-full"
                 )}
               >
-                {item.icon && <item.icon className="mr-1" />}
+                <Link href={item.url}>
+                  {item.icon && <item.icon className="mr-1" />}
+                </Link>
                 <Link key={item.url} href={item.url} className="w-full h-full">
                   {item.name}
                 </Link>

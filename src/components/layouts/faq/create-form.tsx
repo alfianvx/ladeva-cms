@@ -22,6 +22,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFaqContent } from "@/services/dashboard/faq";
 import { useSession } from "next-auth/react";
 import { CircleX, LoaderCircle, Save } from "lucide-react";
+import { toast } from "sonner";
 
 export default function CreateFaqForm() {
   const queryClient = useQueryClient();
@@ -36,11 +37,13 @@ export default function CreateFaqForm() {
       createFaqContent(values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil menambahkan faq!");
       queryClient.invalidateQueries({ queryKey: ["GET_FAQS"] });
       router.push("/dashboard/faq");
     },
     onError: (error) => {
       console.error("Submission error:", error);
+      toast.error("Terjadi kesalahan saat menambahkan faq : " + error.message);
     },
   });
 

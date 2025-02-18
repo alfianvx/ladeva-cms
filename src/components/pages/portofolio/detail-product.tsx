@@ -30,6 +30,7 @@ import {
   deletePortofolio,
   getPortofolioBySlug,
 } from "@/services/dashboard/portofolio";
+import { toast } from "sonner";
 
 export default function DetailPortofolio({ slug }: { slug: string }) {
   const queryClient = useQueryClient();
@@ -46,8 +47,14 @@ export default function DetailPortofolio({ slug }: { slug: string }) {
     mutationKey: ["DELETE_PORTOFOLIO"],
     mutationFn: (id: string) => deletePortofolio(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus portofolio!");
       queryClient.invalidateQueries({ queryKey: ["GET_PORTOFOLIOS"] });
       router.push("/dashboard/portofolio");
+    },
+    onError: (error) => {
+      toast.error(
+        "Terjadi kesalahan saat menghapus portofolio : " + error.message
+      );
     },
   });
 

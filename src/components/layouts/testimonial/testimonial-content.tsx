@@ -23,6 +23,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Loading from "@/app/loading";
+import { toast } from "sonner";
 
 type TTestimonial = {
   id: string;
@@ -46,7 +47,13 @@ export default function TestimonialContent() {
     mutationKey: ["DELETE_TESTIMONIAL"],
     mutationFn: (id: string) => deleteTestimonialContent(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus testimoni!");
       queryClient.invalidateQueries({ queryKey: ["GET_TESTIMONIAL"] });
+    },
+    onError: (error) => {
+      toast.error(
+        "Terjadi kesalahan saat menghapus testimoni : " + error.message
+      );
     },
   });
 
@@ -71,7 +78,7 @@ export default function TestimonialContent() {
     );
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-1">
       {data.data.map((item: TTestimonial) => (
         <Card key={item.id} className="">
           <CardContent className="pt-[24px] text-lg">

@@ -30,6 +30,7 @@ import Image from "next/image";
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TTestimonial } from "@/types/schema/Testimonial";
+import { toast } from "sonner";
 
 export default function EditTestimonialForm({ data }: { data: TTestimonial }) {
   const router = useRouter();
@@ -58,11 +59,12 @@ export default function EditTestimonialForm({ data }: { data: TTestimonial }) {
       updateTestimonialContent(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit testimoni!");
       router.push("/dashboard/testimonial");
       query.invalidateQueries({ queryKey: ["GET_SINGLE_TESTIMONIAL"] });
     },
     onError: (error) => {
-      console.error("Submission error:", error);
+      console.error("Terjadi kesalahan saat mengedit testimoni : ", error);
     },
   });
 

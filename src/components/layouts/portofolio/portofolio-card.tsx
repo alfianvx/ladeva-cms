@@ -41,6 +41,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { convertDate } from "@/utils/dateConverter";
 import { deletePortofolio } from "@/services/dashboard/portofolio";
+import { toast } from "sonner";
 
 export default function PortofolioCard({ product }: { product: TProduct }) {
   const queryClient = useQueryClient();
@@ -51,7 +52,13 @@ export default function PortofolioCard({ product }: { product: TProduct }) {
     mutationKey: ["DELETE_PORTOFOLIO"],
     mutationFn: (id: string) => deletePortofolio(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus portofolio!");
       queryClient.invalidateQueries({ queryKey: ["GET_PORTOFOLIOS"] });
+    },
+    onError: (error) => {
+      toast.error(
+        "Terjadi kesalahan saat menghapus portofolio : " + error.message
+      );
     },
   });
 
@@ -61,7 +68,7 @@ export default function PortofolioCard({ product }: { product: TProduct }) {
 
   return (
     <Card className="p-0">
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <div className="flex items-center">
           <Avatar className="mr-4 size-8">
             <AvatarImage src={product.logo_url} alt={product.name} />

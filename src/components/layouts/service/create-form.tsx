@@ -53,12 +53,16 @@ export default function CreateServiceForm() {
       createServiceContent(values, token),
     onSuccess: () => {
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
+      toast.success("Berhasil menambahkan layanan!");
+      queryClient.invalidateQueries({ queryKey: ["GET_SERVICES"] });
       router.push("/dashboard/service");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
+        toast.error(
+          "Terjadi kesalahan saat menambah layanan : " +
+            error.response?.data.message
+        );
       } else {
         toast.error("An unexpected error occurred.");
       }

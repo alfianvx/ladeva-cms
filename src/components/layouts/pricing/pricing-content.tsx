@@ -37,6 +37,7 @@ import {
   getPricingsContent,
 } from "@/services/dashboard/pricing";
 import { TPricing } from "@/types/schema/Pricing";
+import { toast } from "sonner";
 
 export default function PricingContent() {
   const queryClient = useQueryClient();
@@ -52,6 +53,7 @@ export default function PricingContent() {
     mutationKey: ["DELETE_PRICING"],
     mutationFn: (id: string) => deletePricingContent(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus tawaran!");
       queryClient.invalidateQueries({ queryKey: ["GET_PRICINGS"] });
     },
   });
@@ -77,10 +79,10 @@ export default function PricingContent() {
     );
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-1">
       {data.data.map((item: TPricing) => (
         <Card className="p-0" key={item.id}>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <div className="flex items-center">
               <CardTitle>
                 <h1 className="text-2xl">{item.title}</h1>

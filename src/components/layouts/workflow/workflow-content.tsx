@@ -37,6 +37,7 @@ import {
   deleteWorkflowContent,
   getWorkflowsContent,
 } from "@/services/dashboard/workflow";
+import { toast } from "sonner";
 
 export default function WorkflowContent() {
   const queryClient = useQueryClient();
@@ -52,7 +53,14 @@ export default function WorkflowContent() {
     mutationKey: ["DELETE_WORKFLOW"],
     mutationFn: (id: string) => deleteWorkflowContent(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus alur kerja!");
       queryClient.invalidateQueries({ queryKey: ["GET_WORKFLOWS"] });
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error(
+        "Terjadi kesalahan saat menghapus alur kerja : " + error.message
+      );
     },
   });
 
@@ -77,10 +85,10 @@ export default function WorkflowContent() {
     );
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-1">
       {data.data.map((item: TService) => (
         <Card className="p-0" key={item.id}>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <div className="flex items-center">
               {/* <Avatar className="mr-4 size-8">
                 <AvatarImage src={item.icon_url} alt={item.title} />

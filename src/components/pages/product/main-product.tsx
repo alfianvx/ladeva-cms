@@ -9,7 +9,7 @@ export default function MainProduct() {
         title="Halaman Produk"
         isCreateMode={false}
         url_to="/dashboard/product/create"
-        button_title="Buat Produk"
+        button_title="Tambah Produk"
       />
       <ProductContent />
     </React.Fragment>

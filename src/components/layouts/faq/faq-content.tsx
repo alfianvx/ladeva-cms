@@ -25,6 +25,7 @@ import { useSession } from "next-auth/react";
 import { LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Loading from "@/app/loading";
+import { toast } from "sonner";
 
 type TFaq = {
   id: string;
@@ -32,7 +33,7 @@ type TFaq = {
   answer: string;
 };
 
-export default function FaqContent() {
+export default function XFaqContent() {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["GET_FAQS"],
     queryFn: getFaqsContent,
@@ -46,7 +47,12 @@ export default function FaqContent() {
     mutationKey: ["DELETE_FAQ"],
     mutationFn: (id: string) => deleteFaqContent(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus faq!");
       queryClient.invalidateQueries({ queryKey: ["GET_FAQS"] });
+    },
+    onError: (error) => {
+      console.error("Submission error:", error);
+      toast.error("Terjadi kesalahan saat menghapus faq : " + error.message);
     },
   });
 
@@ -71,20 +77,24 @@ export default function FaqContent() {
     );
 
   return (
-    <section className="my-10">
+    <section className="my-3 px-4">
       {data.data.map((item: TFaq) => (
         <Card key={1} className="max-w-3xl mx-auto my-3">
           <CardContent className="pt-[24px]">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full justify-start"
+            >
               <AccordionItem value="item-1" className="border-none">
-                <AccordionTrigger className="text-lg font-medium">
+                <AccordionTrigger className="text-lg font-medium text-left">
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent>{item.answer}</AccordionContent>
               </AccordionItem>
             </Accordion>
           </CardContent>
-          <CardFooter className="flex gap-3 justify-end">
+          <CardFooter className="flex gap-2 justify-end">
             <Button asChild>
               <Link href={`/dashboard/faq/edit/${item.id}`}>
                 <Pencil /> Edit

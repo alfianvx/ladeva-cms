@@ -61,6 +61,7 @@ export default function CreateProductForm() {
       createProduct(values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil menambah produk!");
       queryClient.invalidateQueries({ queryKey: ["GET_PRODUCTS"] });
       router.push("/dashboard/product");
     },
@@ -68,7 +69,7 @@ export default function CreateProductForm() {
       if (error instanceof AxiosError) {
         toast.error(error.response?.data.message);
       } else {
-        toast.error("An unexpected error occurred.");
+        toast.error("Terjadi kesalahan saat menambah produk" + error.message);
       }
     },
   });

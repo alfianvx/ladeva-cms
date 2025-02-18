@@ -27,6 +27,7 @@ import { PricingFormSchema } from "@/types/validation/pricing.validation";
 import { TPricing } from "@/types/schema/Pricing";
 import { updatePricingContent } from "@/services/dashboard/pricing";
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
 
 export default function EditPricingForm({ data }: { data: TPricing }) {
   const router = useRouter();
@@ -64,12 +65,16 @@ export default function EditPricingForm({ data }: { data: TPricing }) {
       updatePricingContent(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit tawaran!");
       router.push("/dashboard/pricing");
       query.invalidateQueries({ queryKey: ["GET_PRICINGS"] });
       query.invalidateQueries({ queryKey: ["GET_SINGLE_PRICING", data.id] });
     },
     onError: (error) => {
       console.error("Submission error:", error);
+      toast.error(
+        "Terjadi kesalahan saat mengupdate tawaran : " + error.message
+      );
     },
   });
 

@@ -5,7 +5,7 @@ import React from "react";
 export default function CreateProduct() {
   return (
     <React.Fragment>
-      <Header title="Buat Produk Baru" isCreateMode={true} />
+      <Header title="Tambah Produk" isCreateMode={true} />
       <CreateProductForm />
     </React.Fragment>
   );

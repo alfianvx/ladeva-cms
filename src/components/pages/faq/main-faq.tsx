@@ -9,7 +9,7 @@ export default function MainFaq() {
         title="Halaman FAQ"
         isCreateMode={false}
         url_to="/dashboard/faq/create"
-        button_title="Buat FAQ"
+        button_title="Tambah FAQ"
       />
       <FaqContent />
     </React.Fragment>

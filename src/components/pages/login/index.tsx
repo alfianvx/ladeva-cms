@@ -56,7 +56,7 @@ export default function Login() {
         setTimeout(() => {
           router.push("/dashboard"); // Adjust this to your desired redirect path
           router.refresh();
-        }, 1000);
+        }, 500);
         router.push("/dashboard"); // Adjust this to your desired redirect path
         router.refresh();
       }

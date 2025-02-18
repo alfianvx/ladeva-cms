@@ -29,6 +29,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Editor, EditorRef } from "@/components/editor";
 import { TProduct } from "@/types/schema/Product";
+import { toast } from "sonner";
 
 export default function EditProductForm({ data }: { data: TProduct }) {
   const queryClient = useQueryClient();
@@ -63,6 +64,7 @@ export default function EditProductForm({ data }: { data: TProduct }) {
       updateProduct(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit produk!");
       router.push("/dashboard/product");
       queryClient.invalidateQueries({ queryKey: ["GET_PRODUCTS"] });
       queryClient.invalidateQueries({
@@ -70,7 +72,7 @@ export default function EditProductForm({ data }: { data: TProduct }) {
       });
     },
     onError: (error) => {
-      console.error("Submission error:", error);
+      toast.error("Terjadi kesalahan saat mengedit produk : " + error.message);
     },
   });
 

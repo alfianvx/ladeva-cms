@@ -41,6 +41,7 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { convertDate } from "@/utils/dateConverter";
+import { toast } from "sonner";
 const ProductCard = ({ product }: { product: TProduct }) => {
   const queryClient = useQueryClient();
   const session = useSession();
@@ -50,7 +51,11 @@ const ProductCard = ({ product }: { product: TProduct }) => {
     mutationKey: ["DELETE_PRODUCT"],
     mutationFn: (id: string) => deleteProduct(id, token),
     onSuccess: () => {
+      toast.success("Berhasil menghapus produk!");
       queryClient.invalidateQueries({ queryKey: ["GET_PRODUCTS"] });
+    },
+    onError: (error) => {
+      toast.error("Terjadi kesalahan saat menghapus produk : " + error.message);
     },
   });
 
@@ -60,7 +65,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
 
   return (
     <Card className="p-0">
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <div className="flex items-center">
           <Avatar className="mr-4 size-8">
             <AvatarImage src={product.logo_url} alt={product.name} />

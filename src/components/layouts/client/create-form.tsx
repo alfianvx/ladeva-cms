@@ -44,12 +44,16 @@ export default function CreateClientForm() {
       createClient(values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil menambahkan partner!");
       queryClient.invalidateQueries({ queryKey: ["GET_CLIENTS"] });
       router.push("/dashboard/client");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
+        toast.error(
+          "Terjadi kesalahan saat menambahkan partner : " +
+            error.response?.data.message
+        );
       } else {
         toast.error("An unexpected error occurred.");
       }

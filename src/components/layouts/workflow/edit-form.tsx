@@ -25,6 +25,7 @@ import { TService } from "@/types/schema/Service";
 import { Textarea } from "@/components/ui/textarea";
 import { WorkflowFormSchema } from "@/types/validation/workflow.validation";
 import { updateWorkflowContent } from "@/services/dashboard/workflow";
+import { toast } from "sonner";
 // import { updateServiceContent } from "@/services/dashboard/service";
 // import { UploadButton } from "@uploadthing/react";
 // import { OurFileRouter } from "@/app/api/uploadthing/core";
@@ -55,11 +56,15 @@ export default function EditWorkflowForm({ data }: { data: TService }) {
       updateWorkflowContent(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit alur kerja!");
       router.push("/dashboard/workflow");
       query.invalidateQueries({ queryKey: ["GET_WORKFLOWS"] });
     },
     onError: (error) => {
       console.error("Submission error:", error);
+      toast.error(
+        "Terjadi kesalahan saat mengedit alur kerja : " + error.message
+      );
     },
   });
 

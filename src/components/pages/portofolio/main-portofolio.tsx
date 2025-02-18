@@ -9,7 +9,7 @@ export default function MainPortofolio() {
         title="Halaman Portofolio"
         isCreateMode={false}
         url_to="/dashboard/portofolio/create"
-        button_title="Buat Portofolio"
+        button_title="Tambah Portofolio"
       />
       <PortofolioContent />
     </React.Fragment>

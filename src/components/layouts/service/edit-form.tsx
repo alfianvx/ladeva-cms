@@ -28,6 +28,7 @@ import { TService } from "@/types/schema/Service";
 import { ServiceFormSchema } from "@/types/validation/service.validation";
 import { updateServiceContent } from "@/services/dashboard/service";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 export default function EditServiceForm({ data }: { data: TService }) {
   const router = useRouter();
@@ -54,11 +55,13 @@ export default function EditServiceForm({ data }: { data: TService }) {
       updateServiceContent(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit layanan!");
       router.push("/dashboard/service");
       query.invalidateQueries({ queryKey: ["GET_SERVICES"] });
     },
     onError: (error) => {
       console.error("Submission error:", error);
+      toast.error("Terjadi kesalahan saat mengedit layanan : " + error.message);
     },
   });
 

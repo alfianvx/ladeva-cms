@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { CircleX, LoaderCircle, Save } from "lucide-react";
+import { CircleX, LoaderCircle, Save, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { Textarea } from "@/components/ui/textarea";
@@ -60,14 +60,18 @@ export default function CreatePricingForm() {
       createPricingContent(values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil menambahkan tawaran baru!");
       queryClient.invalidateQueries({ queryKey: ["GET_PRICINGS"] });
       router.push("/dashboard/pricing");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
+        toast.error(
+          "Terjadi kesalahan saat menambahkan tawaran : " +
+            error.response?.data.message
+        );
       } else {
-        toast.error("An unexpected error occurred.");
+        toast.error("Terjadi kesalahan saat menambahkan tawaran!");
       }
     },
   });
@@ -128,6 +132,19 @@ export default function CreatePricingForm() {
                       value={input}
                       onChange={(e) => handleInputChange(index, e.target.value)}
                     />
+                    {inputs.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={() => {
+                          setInputs((prev) =>
+                            prev.filter((_, i) => i !== index)
+                          );
+                        }}
+                      >
+                        <Trash2 />
+                      </Button>
+                    )}
                   </div>
                 ))}
                 <Button

@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function DetailProduct({ slug }: { slug: string }) {
   const queryClient = useQueryClient();
@@ -43,8 +44,12 @@ export default function DetailProduct({ slug }: { slug: string }) {
     mutationKey: ["DELETE_PRODUCT"],
     mutationFn: (id: string) => deleteProduct(id, token),
     onSuccess: () => {
+      toast.success("Berhasil mengapus produk!");
       queryClient.invalidateQueries({ queryKey: ["GET_PRODUCTS"] });
       router.push("/dashboard/product");
+    },
+    onError: (error) => {
+      toast.error("Terjadi kesalahan saat menghapus produk!" + error.message);
     },
   });
 

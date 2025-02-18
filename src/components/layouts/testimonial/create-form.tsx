@@ -47,12 +47,16 @@ export default function CreateTestimonialForm() {
       createTestimonialContent(values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil menambahkan testimoni!");
       queryClient.invalidateQueries({ queryKey: ["GET_TESTIMONIAL"] });
       router.push("/dashboard/testimonial");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
+        toast.error(
+          "Terjadi kesalahan saat menambahkan testimoni : " +
+            error.response?.data.message
+        );
       } else {
         toast.error("An unexpected error occurred.");
       }

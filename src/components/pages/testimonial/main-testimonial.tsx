@@ -9,7 +9,7 @@ export default function MainTestimonial() {
         title="Halaman Testimoni"
         isCreateMode={false}
         url_to="/dashboard/testimonial/create"
-        button_title="Tambah Testimoni Baru"
+        button_title="Tambah Testimoni"
       />
       <TestimonialContent />
     </React.Fragment>

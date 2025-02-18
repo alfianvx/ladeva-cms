@@ -61,12 +61,16 @@ export default function CreatePortofolioForm() {
       createPortofolio(values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil menambahkan portofolio!");
       queryClient.invalidateQueries({ queryKey: ["GET_PORTOFOLIOS"] });
       router.push("/dashboard/portofolio");
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
+        toast.error(
+          "Terjadi kesalahan saat menambahkan portofolio : " +
+            error.response?.data.message
+        );
       } else {
         toast.error("An unexpected error occurred.");
       }

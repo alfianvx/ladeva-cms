@@ -33,7 +33,7 @@ export default function PortofolioContent() {
     );
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 py-1">
       {data.data.map((item: TPortofolio) => (
         <PortofolioCard key={item.id} product={item} />
       ))}

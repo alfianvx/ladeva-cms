@@ -29,6 +29,7 @@ import { Editor, EditorRef } from "@/components/editor";
 import { TProduct } from "@/types/schema/Product";
 import { PortofolioFormSchema } from "@/types/validation/portofolio.validation";
 import { updatePortofolio } from "@/services/dashboard/portofolio";
+import { toast } from "sonner";
 
 export default function EditPortofolioForm({ data }: { data: TProduct }) {
   const queryClient = useQueryClient();
@@ -63,6 +64,7 @@ export default function EditPortofolioForm({ data }: { data: TProduct }) {
       updatePortofolio(data.id, values, token),
     onSuccess: () => {
       form.reset();
+      toast.success("Berhasil mengedit portofolio!");
       router.push("/dashboard/portofolio");
       queryClient.invalidateQueries({ queryKey: ["GET_PORTOFOLIOS"] });
       queryClient.invalidateQueries({
@@ -70,7 +72,7 @@ export default function EditPortofolioForm({ data }: { data: TProduct }) {
       });
     },
     onError: (error) => {
-      console.error("Submission error:", error);
+      console.error("Terjadi kesalahan saat mengedit portofolio : ", error);
     },
   });
 
