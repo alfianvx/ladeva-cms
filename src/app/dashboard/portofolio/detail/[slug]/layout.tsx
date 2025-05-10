@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Detail Portofolio | Ladeva CMS",
+  title: "Detail Portofolio ─ Ladeva CMS",
 };
 
 export default async function Layout({

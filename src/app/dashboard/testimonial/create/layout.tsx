@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tambah Testimoni | Ladeva CMS",
+  title: "Tambah Testimoni ─ Ladeva CMS",
 };
 
 export default async function Layout({

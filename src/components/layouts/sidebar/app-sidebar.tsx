@@ -194,7 +194,7 @@ const data = {
   // ],
   others: [
     {
-      name: "Akun",
+      name: "Profile",
       url: "/dashboard/profile",
       icon: User,
     },
